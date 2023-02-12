@@ -112,4 +112,9 @@ if config_env() == :prod do
   #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+
+  # Configure OpenAI
+  config :open_ai,
+         api_key: System.fetch_env!("OPEN_AI_API_KEY"),
+         organization: System.fetch_env!("OPEN_AI_ORGANIZATION_ID")
 end
