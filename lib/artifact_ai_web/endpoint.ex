@@ -20,7 +20,7 @@ defmodule ArtifactAiWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :artifact_ai,
-    gzip: false,
+    gzip: true,
     only: ArtifactAiWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
