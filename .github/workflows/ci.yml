@@ -1,0 +1,45 @@
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - 'app/**'
+  pull_request:
+    branches:
+    - main
+    paths:
+    - 'app/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Erlang OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    strategy:
+      matrix:
+        otp: ['25.x']
+        elixir: ['1.14.x']
+    defaults:
+      run:
+        working-directory: app
+    services:
+      # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
+      postgres:
+        image: postgres:alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+        - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: erlef/setup-beam@v1
+      with:
+        otp-version: ${{matrix.otp}}
+        elixir-version: ${{matrix.elixir}}
+    - run: mix deps.get
+    - run: mix test
