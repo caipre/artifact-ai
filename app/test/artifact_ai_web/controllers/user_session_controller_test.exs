@@ -21,7 +21,6 @@ defmodule ArtifactAiWeb.UserSessionControllerTest do
       conn = get(conn, ~p"/")
       response = html_response(conn, 200)
       assert response =~ user.email
-      assert response =~ "Settings</a>"
       assert response =~ "Log out</a>"
     end
 

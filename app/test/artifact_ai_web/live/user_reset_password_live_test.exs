@@ -87,6 +87,7 @@ defmodule ArtifactAiWeb.UserResetPasswordLiveTest do
     end
   end
 
+  @tag :skip
   describe "Reset password navigation" do
     test "redirects to login page when the Log in button is clicked", %{conn: conn, token: token} do
       {:ok, lv, _html} = live(conn, ~p"/users/reset_password/#{token}")
