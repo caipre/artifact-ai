@@ -50,6 +50,7 @@ defmodule ArtifactAi.MixProject do
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
+      {:ueberauth_google, "~> 0.10"},
 
       # only: test
       {:floki, ">= 0.30.0", only: :test},

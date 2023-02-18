@@ -47,6 +47,13 @@ defmodule ArtifactAiWeb.Router do
 
   ## Authentication routes
 
+  scope "/auth", ArtifactAiWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
+
   scope "/", ArtifactAiWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
