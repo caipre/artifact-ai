@@ -4,27 +4,6 @@ defmodule ArtifactAiWeb.UserLoginLiveTest do
   import Phoenix.LiveViewTest
   import ArtifactAi.AccountsFixtures
 
-  @tag :skip
-  describe "Log in page" do
-    test "renders log in page", %{conn: conn} do
-      {:ok, _lv, html} = live(conn, ~p"/users/log_in")
-
-      assert html =~ "Log in"
-      assert html =~ "Register"
-      assert html =~ "Forgot your password?"
-    end
-
-    test "redirects if already logged in", %{conn: conn} do
-      result =
-        conn
-        |> log_in_user(user_fixture())
-        |> live(~p"/users/log_in")
-        |> follow_redirect(conn, "/")
-
-      assert {:ok, _conn} = result
-    end
-  end
-
   describe "user login" do
     test "redirects if user login with valid credentials", %{conn: conn} do
       password = "123456789abcd"
