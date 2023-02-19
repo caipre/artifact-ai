@@ -32,6 +32,7 @@ defmodule ArtifactAi.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:argon2_elixir, "~> 3.0"},
       {:ecto_sql, "~> 3.6"},
       {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},
       {:finch, "~> 0.13"},
@@ -49,6 +50,7 @@ defmodule ArtifactAi.MixProject do
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
+      {:ueberauth_google, "~> 0.10"},
 
       # only: test
       {:floki, ">= 0.30.0", only: :test},

@@ -52,6 +52,17 @@
         v1.7
       </small>
     </h1>
+    <div>
+    <%= if @current_user do %>
+    <p>
+    <%= @current_user.email %> • <.link href={~p"/users/log_out"} method="delete">Log out</.link>
+    </p>
+    <% else %>
+    <p>
+    <.link href={~p"/auth/google"}>Sign in with Google</.link>
+    </p>
+    <% end %>
+    </div>
     <p class="mt-4 text-[2rem] font-semibold leading-10 tracking-tighter text-zinc-900">
       Peace of mind from prototype to production.
     </p>
