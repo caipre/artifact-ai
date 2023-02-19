@@ -75,6 +75,13 @@ defmodule ArtifactAiWeb.Router do
       on_mount: [{ArtifactAiWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
+      live "/prompts", PromptLive.Index, :index
+      live "/prompts/new", PromptLive.Index, :new
+      live "/prompts/:id/edit", PromptLive.Index, :edit
+
+      live "/prompts/:id", PromptLive.Show, :show
+      live "/prompts/:id/show/edit", PromptLive.Show, :edit
     end
   end
 
@@ -88,5 +95,17 @@ defmodule ArtifactAiWeb.Router do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
+  end
+
+  ##
+
+  scope "/", ArtifactAiWeb do
+    pipe_through [:browser]
+    live "/images", ImageLive.Index, :index
+    live "/images/new", ImageLive.Index, :new
+    live "/images/:id/edit", ImageLive.Index, :edit
+
+    live "/images/:id", ImageLive.Show, :show
+    live "/images/:id/show/edit", ImageLive.Show, :edit
   end
 end
