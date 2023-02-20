@@ -8,8 +8,7 @@ defmodule CanvasChamp.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: CanvasChamp.Worker.start_link(arg)
-      # {CanvasChamp.Worker, arg}
+      {Finch, name: CanvasChamp.Finch}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

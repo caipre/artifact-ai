@@ -20,6 +20,12 @@ defmodule CanvasChamp.MixProject do
   defp deps do
     [
       {:finch, "~> 0.14"},
+      {:jason, "~> 1.4"},
+
+      # only: test
+      {:hammox, "~> 0.7", only: :test},
+
+      # only: dev
       {:ex_doc, "~> 0.29", only: :dev, runtime: false}
     ]
   end
