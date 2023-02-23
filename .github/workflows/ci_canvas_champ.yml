@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - 'canvas_champ/**'
+  pull_request:
+    branches:
+    - main
+    paths:
+    - 'canvas_champ/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Erlang OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    strategy:
+      matrix:
+        otp: ['25.x']
+        elixir: ['1.14.x']
+    defaults:
+      run:
+        working-directory: canvas_champ
+    steps:
+    - uses: actions/checkout@v3
+    - uses: erlef/setup-beam@v1
+      with:
+        otp-version: ${{matrix.otp}}
+        elixir-version: ${{matrix.elixir}}
+    - run: mix deps.get
+    - run: mix test
