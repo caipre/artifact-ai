@@ -9,11 +9,10 @@ defmodule CanvasChamp.ApiClientTest do
 
   describe "request/4" do
     test "decodes response as json" do
-      HttpClientImplMock
+      HttpClientMock
       |> expect(:request, fn _, _, _, _ -> {:ok, Jason.encode!(%{foo: "bar"})} end)
 
-      assert ApiClient.request(:post, "https://example.org") ==
-               {:ok, %{"foo" => "bar"}}
+      assert ApiClient.post("https://example.org") == {:ok, %{"foo" => "bar"}}
     end
   end
 end

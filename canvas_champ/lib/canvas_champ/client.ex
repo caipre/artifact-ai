@@ -3,7 +3,7 @@ defmodule CanvasChamp.HttpClient do
 
   use Knigge,
     otp_app: :canvas_champ,
-    default: CanvasChamp.HttpClientImpl
+    default: CanvasChamp.ApiClient
 
   @type methods :: :get | :post | :head | :patch | :delete | :options | :put | String.t()
 
@@ -15,11 +15,33 @@ defmodule CanvasChamp.HttpClient do
             ) :: {:ok, String.t()} | {:error, Exception.t()}
 end
 
-defmodule CanvasChamp.HttpClientImpl do
-  #  Impl using Finch.
+defmodule CanvasChamp.ApiClient do
   @moduledoc false
 
+  alias CanvasChamp.Error
   alias CanvasChamp.HttpClient
+
+  @base_url "https://api.canvaschamp.com"
+  @version "V1"
+
+  def post(resource, body \\ %{}, headers \\ []) do
+    headers = merge_with_auth_header([{"content-type", "application/json"} | headers])
+
+    case HttpClient.request(:post, resource_url(resource), headers, body) do
+      {:ok, json} -> decode(json)
+      {:error, ex} -> {:error, ex}
+    end
+  end
+
+  defp decode(body) do
+    case Jason.decode!(body) do
+      %{"message" => message} ->
+        {:error, %Error{message: message}}
+
+      body ->
+        {:ok, body}
+    end
+  end
 
   @behaviour HttpClient
 
@@ -41,36 +63,6 @@ defmodule CanvasChamp.HttpClientImpl do
   defp finch_request(method, url, headers, params) do
     Finch.build(method, url, headers, Jason.encode!(params))
     |> Finch.request(CanvasChamp.Finch)
-  end
-end
-
-defmodule CanvasChamp.ApiClient do
-  #  A small helper to manages urls, headers, and types.
-  @moduledoc false
-
-  alias CanvasChamp.Error
-  alias CanvasChamp.HttpClient
-
-  @base_url "https://api.canvaschamp.com"
-  @version "V1"
-
-  def request(method, resource, headers \\ [], body \\ %{}) do
-    headers = merge_with_auth_header([{"content-type", "application/json"} | headers])
-
-    case HttpClient.request(method, resource_url(resource), headers, body) do
-      {:ok, json} -> decode(json)
-      {:error, ex} -> {:error, ex}
-    end
-  end
-
-  defp decode(body) do
-    case Jason.decode!(body) do
-      %{"message" => message} ->
-        {:error, %Error{message: message}}
-
-      body ->
-        {:ok, body}
-    end
   end
 
   defp merge_with_auth_header(headers) do

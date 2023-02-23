@@ -12,8 +12,8 @@ defmodule CanvasChamp.OrdersImplTest do
   setup :verify_on_exit!
 
   describe "create/5" do
-    test "with valid data creates an order" do
-      expect(HttpClientImplMock, :request, fn _, _, _, _ ->
+    test "includes the payload in the request" do
+      expect(HttpClientMock, :request, fn _, _, _, _ ->
         {:ok, Jason.encode!("USA158867018117")}
       end)
 
@@ -28,7 +28,7 @@ defmodule CanvasChamp.OrdersImplTest do
     end
 
     test "with invalid data returns an error" do
-      expect(HttpClientImplMock, :request, fn _, _, _, _ ->
+      expect(HttpClientMock, :request, fn _, _, _, _ ->
         {:ok,
          Jason.encode!(%{
            message: "Customer Validation Error(s): \"email\" is required. Enter and try again."

@@ -79,7 +79,7 @@ defmodule CanvasChamp.OrdersImpl do
 
   @impl Orders
   def create(customer, products, shippingAddress, billingAddress, additionalInformation) do
-    ApiClient.request(:post, "cporders/create", [], %{
+    ApiClient.post("cporders/create", %{
       customer: customer,
       products: products,
       shippingAddress: shippingAddress,
