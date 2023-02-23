@@ -1,10 +1,13 @@
 defmodule CanvasChamp.Orders do
-  @moduledoc false
+  @moduledoc "Provides the ability to interact with the CanvasChamp Orders API."
+
   use Box
 
-  defbox(Error,
-    message: String.t()
-  )
+  use Knigge,
+    otp_app: :canvas_champ,
+    default: CanvasChamp.OrdersImpl
+
+  alias CanvasChamp.Error
 
   defbox(NewCustomer,
     email: String.t(),
@@ -56,4 +59,32 @@ defmodule CanvasChamp.Orders do
     reference_order_id: String.t(),
     dropship: integer()
   )
+
+  @callback create(
+              customer :: NewCustomer.t() | Customer.t(),
+              products :: [Product.t()],
+              shippingAddress :: ShippingAddress.t(),
+              billingAddress :: BillingAddress.t(),
+              additionalInformation :: AdditionalInformation.t()
+            ) :: {:ok, String.t()} | {:error, Error.t()}
+end
+
+defmodule CanvasChamp.OrdersImpl do
+  @moduledoc false
+
+  alias CanvasChamp.ApiClient
+  alias CanvasChamp.Orders
+
+  @behaviour Orders
+
+  @impl Orders
+  def create(customer, products, shippingAddress, billingAddress, additionalInformation) do
+    ApiClient.request(:post, "cporders/create", [], %{
+      customer: customer,
+      products: products,
+      shippingAddress: shippingAddress,
+      billingAddress: billingAddress,
+      additionalInformation: additionalInformation
+    })
+  end
 end

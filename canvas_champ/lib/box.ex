@@ -1,5 +1,5 @@
-# https://gist.github.com/teamon/b90a2ddca4965848559a96aff49ed9bb/
 defmodule Box do
+  # https://gist.github.com/teamon/b90a2ddca4965848559a96aff49ed9bb/
   @moduledoc false
 
   defmacro __using__(_env) do
