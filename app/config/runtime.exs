@@ -5,7 +5,14 @@ import Config
 # system starts, so it is typically used to load production configuration
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
-# The block below contains prod specific runtime configuration.
+
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: System.fetch_env!("GOOGLE_CLIENT_ID"),
+  client_secret: System.fetch_env!("GOOGLE_CLIENT_SECRET")
+
+config :open_ai,
+  api_key: System.fetch_env!("OPEN_AI_API_KEY"),
+  organization: System.fetch_env!("OPEN_AI_ORGANIZATION_ID")
 
 # ## Using releases
 #
@@ -20,6 +27,7 @@ if System.get_env("PHX_SERVER") do
   config :artifact_ai, ArtifactAiWeb.Endpoint, server: true
 end
 
+# The block below contains prod specific runtime configuration.
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
