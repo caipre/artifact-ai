@@ -66,12 +66,12 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+       client_id: System.get_env("GOOGLE_CLIENT_ID") || "",
+       client_secret: System.get_env("GOOGLE_CLIENT_SECRET") || ""
 
 config :open_ai,
-  api_key: System.get_env("OPEN_AI_API_KEY"),
-  organization: System.get_env("OPEN_AI_ORGANIZATION_ID")
+       api_key: System.get_env("OPEN_AI_API_KEY") || "",
+       organization: System.get_env("OPEN_AI_ORGANIZATION_ID") || ""
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

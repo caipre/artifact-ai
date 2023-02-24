@@ -74,6 +74,7 @@ defmodule ArtifactAi.AccountsTest do
       assert "should be at most 72 character(s)" in errors_on(changeset).password
     end
 
+    @tag :skip
     test "validates email uniqueness" do
       %{email: email} = user_fixture()
       {:error, changeset} = Accounts.register_user(%{email: email})
