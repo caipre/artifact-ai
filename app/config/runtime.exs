@@ -6,14 +6,6 @@ import Config
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
 
-config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.fetch_env!("GOOGLE_CLIENT_ID"),
-  client_secret: System.fetch_env!("GOOGLE_CLIENT_SECRET")
-
-config :open_ai,
-  api_key: System.fetch_env!("OPEN_AI_API_KEY"),
-  organization: System.fetch_env!("OPEN_AI_ORGANIZATION_ID")
-
 # ## Using releases
 #
 # If you use `mix release`, you need to explicitly enable the server
@@ -70,6 +62,14 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base
+
+  config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+         client_id: System.fetch_env!("GOOGLE_CLIENT_ID"),
+         client_secret: System.fetch_env!("GOOGLE_CLIENT_SECRET")
+
+  config :open_ai,
+         api_key: System.fetch_env!("OPEN_AI_API_KEY"),
+         organization: System.fetch_env!("OPEN_AI_ORGANIZATION_ID")
 
   # ## SSL Support
   #
