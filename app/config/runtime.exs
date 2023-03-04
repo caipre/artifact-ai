@@ -5,6 +5,7 @@ import Config
 # system starts, so it is typically used to load production configuration
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
+# The block below contains prod specific runtime configuration.
 
 # ## Using releases
 #
@@ -19,7 +20,6 @@ if System.get_env("PHX_SERVER") do
   config :artifact_ai, ArtifactAiWeb.Endpoint, server: true
 end
 
-# The block below contains prod specific runtime configuration.
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
@@ -28,7 +28,7 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
+  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   config :artifact_ai, ArtifactAi.Repo,
     # ssl: true,
@@ -62,14 +62,6 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base
-
-  config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-         client_id: System.fetch_env!("GOOGLE_CLIENT_ID"),
-         client_secret: System.fetch_env!("GOOGLE_CLIENT_SECRET")
-
-  config :open_ai,
-         api_key: System.fetch_env!("OPEN_AI_API_KEY"),
-         organization: System.fetch_env!("OPEN_AI_ORGANIZATION_ID")
 
   # ## SSL Support
   #

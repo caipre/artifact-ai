@@ -1,22 +1,18 @@
 # ArtifactAi
 
-[![Lifecycle: Alpha](https://img.shields.io/badge/lifecycle-alpha-a0c3d2.svg)](https://img.shields.io/badge/lifecycle-alpha-a0c3d2.svg)
+To start your Phoenix server:
 
-## Get started
+  * Run `mix setup` to install and setup dependencies
+  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-This is an [Elixir](https://elixir-lang.org/) application built using the [Phoenix Framework](https://www.phoenixframework.org/). Before you begin, please take a minute to read through the [Installation Guide](https://hexdocs.pm/phoenix/1.7.0-rc.3/installation.html). By installing dependencies beforehand, you'll be able to get the application up and running smoothly.
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-First start a PostgreSQL database:
+Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-```console
-$ docker run --detach --name artifact_ai -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:alpine
-```
+## Learn more
 
-Next start the Phoenix server:
-
-```console
-$ mix setup
-$ mix phx.server
-```
-
-By default, the server accepts requests at http://localhost:4000 .
+  * Official website: https://www.phoenixframework.org/
+  * Guides: https://hexdocs.pm/phoenix/overview.html
+  * Docs: https://hexdocs.pm/phoenix
+  * Forum: https://elixirforum.com/c/phoenix-forum
+  * Source: https://github.com/phoenixframework/phoenix

@@ -1,8 +1,6 @@
 defmodule ArtifactAiWeb.Router do
   use ArtifactAiWeb, :router
 
-  import ArtifactAiWeb.UserAuth
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -10,7 +8,6 @@ defmodule ArtifactAiWeb.Router do
     plug :put_root_layout, {ArtifactAiWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :fetch_current_user
   end
 
   pipeline :api do
@@ -43,69 +40,5 @@ defmodule ArtifactAiWeb.Router do
       live_dashboard "/dashboard", metrics: ArtifactAiWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
-  end
-
-  ## Authentication routes
-
-  scope "/auth", ArtifactAiWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
-
-    get "/:provider", AuthController, :request
-    get "/:provider/callback", AuthController, :callback
-  end
-
-  scope "/", ArtifactAiWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
-
-    live_session :redirect_if_user_is_authenticated,
-      on_mount: [{ArtifactAiWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/users/register", UserRegistrationLive, :new
-      live "/users/log_in", UserLoginLive, :new
-      live "/users/reset_password", UserForgotPasswordLive, :new
-      live "/users/reset_password/:token", UserResetPasswordLive, :edit
-    end
-
-    post "/users/log_in", UserSessionController, :create
-  end
-
-  scope "/", ArtifactAiWeb do
-    pipe_through [:browser, :require_authenticated_user]
-
-    live_session :require_authenticated_user,
-      on_mount: [{ArtifactAiWeb.UserAuth, :ensure_authenticated}] do
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-
-      live "/prompts", PromptLive.Index, :index
-      live "/prompts/new", PromptLive.Index, :new
-      live "/prompts/:id/edit", PromptLive.Index, :edit
-
-      live "/prompts/:id", PromptLive.Show, :show
-      live "/prompts/:id/show/edit", PromptLive.Show, :edit
-    end
-  end
-
-  scope "/", ArtifactAiWeb do
-    pipe_through [:browser]
-
-    delete "/users/log_out", UserSessionController, :delete
-
-    live_session :current_user,
-      on_mount: [{ArtifactAiWeb.UserAuth, :mount_current_user}] do
-      live "/users/confirm/:token", UserConfirmationLive, :edit
-      live "/users/confirm", UserConfirmationInstructionsLive, :new
-    end
-  end
-
-  ##
-
-  scope "/", ArtifactAiWeb do
-    pipe_through [:browser]
-    live "/images", ImageLive.Index, :index
-    live "/images/new", ImageLive.Index, :new
-    live "/images/:id/edit", ImageLive.Index, :edit
-
-    live "/images/:id", ImageLive.Show, :show
-    live "/images/:id/show/edit", ImageLive.Show, :edit
   end
 end

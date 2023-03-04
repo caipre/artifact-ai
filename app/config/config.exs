@@ -18,7 +18,7 @@ config :artifact_ai, ArtifactAiWeb.Endpoint,
     layout: false
   ],
   pubsub_server: ArtifactAi.PubSub,
-  live_view: [signing_salt: "5CcC3+8U"]
+  live_view: [signing_salt: "yueQFycb"]
 
 # Configures the mailer
 #
@@ -58,31 +58,6 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
-# Configure Sentry
-config :sentry,
-       dsn:
-         "https://1869c16d7cc5448fb13f99401ad5974e@o4504670167498752.ingest.sentry.io/4504670177198080",
-       included_environments: ~w(production development),
-       environment_name: Mix.env(),
-       enable_source_code_context: true,
-       root_source_code_path: File.cwd!(),
-       tags: %{env: Mix.env()}
-
-
-# Configure ueberauth
-config :ueberauth, Ueberauth,
-  providers: [
-    google: {Ueberauth.Strategy.Google, [default_scope: "profile email"]}
-  ]
-
-config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-       client_id: System.get_env("GOOGLE_CLIENT_ID") || "",
-       client_secret: System.get_env("GOOGLE_CLIENT_SECRET") || ""
-
-config :open_ai,
-       api_key: System.get_env("OPEN_AI_API_KEY") || "",
-       organization: System.get_env("OPEN_AI_ORGANIZATION_ID") || ""
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
