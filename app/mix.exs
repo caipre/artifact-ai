@@ -37,6 +37,8 @@ defmodule ArtifactAi.MixProject do
       {:gettext, "~> 0.20"},
       {:hackney, "~> 1.8"},
       {:jason, "~> 1.2"},
+      {:joken, "~> 2.6"},
+      {:joken_jwks, "~> 1.6"},
       {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.3"},

@@ -8,11 +8,14 @@ defmodule ArtifactAi.Application do
   @impl true
   def start(_type, _args) do
     Logger.add_backend(Sentry.LoggerBackend)
+
     children = [
       # Start the Telemetry supervisor
       ArtifactAiWeb.Telemetry,
       # Start the Ecto repository
       ArtifactAi.Repo,
+      # Start the Google ID Jwks strategy
+      ArtifactAiWeb.Jwks.GoogleId,
       # Start the PubSub system
       {Phoenix.PubSub, name: ArtifactAi.PubSub},
       # Start Finch

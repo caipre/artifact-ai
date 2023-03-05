@@ -6,8 +6,11 @@ defmodule ArtifactAiWeb.Router do
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, {ArtifactAiWeb.Layouts, :root}
-    plug :protect_from_forgery
     plug :put_secure_browser_headers
+  end
+
+  pipeline :csrf do
+    plug :protect_from_forgery
   end
 
   pipeline :api do
@@ -15,9 +18,15 @@ defmodule ArtifactAiWeb.Router do
   end
 
   scope "/", ArtifactAiWeb do
-    pipe_through :browser
+    pipe_through [:browser, :csrf]
 
     get "/", PageController, :home
+    get "/login", PageController, :show_login
+  end
+
+  scope "/", ArtifactAiWeb do
+    pipe_through [:browser]
+    post "/login", PageController, :handle_login
   end
 
   # Other scopes may use custom stacks.
