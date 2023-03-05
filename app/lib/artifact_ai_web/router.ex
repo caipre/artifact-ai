@@ -1,6 +1,8 @@
 defmodule ArtifactAiWeb.Router do
   use ArtifactAiWeb, :router
 
+  import ArtifactAiWeb.AuthController
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -13,26 +15,20 @@ defmodule ArtifactAiWeb.Router do
     plug :protect_from_forgery
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", ArtifactAiWeb do
     pipe_through [:browser, :csrf]
-
-    get "/", PageController, :home
-    get "/login", PageController, :show_login
+    get "/", PageController, :sign_in
   end
 
   scope "/", ArtifactAiWeb do
     pipe_through [:browser]
-    post "/login", PageController, :handle_login
+    post "/auth/sign_in", AuthController, :maybe_sign_in
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", ArtifactAiWeb do
-  #   pipe_through :api
-  # end
+  scope "/", ArtifactAiWeb do
+    pipe_through [:browser, :csrf, :authenticated, :assign_current_user]
+    get "/create", PageController, :create
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:artifact_ai, :dev_routes) do

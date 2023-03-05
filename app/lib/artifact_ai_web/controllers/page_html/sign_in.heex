@@ -1,0 +1,36 @@
+<div class="flex flex-col justify-center items-center px-12 h-full w-full">
+  <div><.flash_group flash={@flash} /></div>
+  <main class="flex flex-col items-center max-w-prose gap-2">
+    <h1 class="flex items-center text-sm font-semibold text-brand">
+      ArtifactAi
+      <small class="ml-3 rounded-full bg-brand/5 px-2 text-[0.8125rem] font-medium">
+        v<%= Application.spec(:artifact_ai, :vsn) %>
+      </small>
+    </h1>
+    <h2 class="text-[2rem] font-semibold tracking-tighter text-zinc-900">
+      Print your idea.
+    </h2>
+    <div class="my-16">
+      <div
+        id="g_id_onload"
+        data-client_id={@google_client_id}
+        data-login_uri={@login_uri}
+        data-auto_prompt="false"
+      >
+      </div>
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-shape="rectangular"
+        data-theme="outline"
+        data-text="continue_with"
+        data-logo_alignment="left"
+      >
+      </div>
+    </div>
+    <p class="text-zinc-600 text-center">
+      Bring your ideas to life with our printing and framing service.
+    </p>
+  </main>
+</div>
