@@ -10,6 +10,9 @@ import Config
 config :artifact_ai,
   ecto_repos: [ArtifactAi.Repo]
 
+# Configure the repo
+config :artifact_ai, ArtifactAi.Repo, migration_timestamps: [type: :utc_datetime]
+
 # Configures the endpoint
 config :artifact_ai, ArtifactAiWeb.Endpoint,
   url: [host: "localhost"],

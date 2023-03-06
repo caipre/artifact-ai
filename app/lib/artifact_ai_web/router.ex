@@ -26,8 +26,9 @@ defmodule ArtifactAiWeb.Router do
   end
 
   scope "/", ArtifactAiWeb do
-    pipe_through [:browser, :csrf, :authenticated, :assign_current_user]
-    get "/create", PageController, :create
+    pipe_through [:browser, :csrf, :assign_current_user, :authenticated]
+    get "/welcome", PageController, :welcome
+    post "/auth/sign_out", AuthController, :sign_out
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -40,7 +41,7 @@ defmodule ArtifactAiWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through [:browser, :csrf]
 
       live_dashboard "/dashboard", metrics: ArtifactAiWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview

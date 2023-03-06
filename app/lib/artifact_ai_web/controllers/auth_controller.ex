@@ -1,30 +1,34 @@
 defmodule ArtifactAiWeb.AuthController do
   use ArtifactAiWeb, :controller
 
-  alias ArtifactAiWeb.Token
+  alias ArtifactAi.Accounts
   alias ArtifactAiWeb.Jwks.GoogleId
+  alias ArtifactAiWeb.Token
 
   def maybe_sign_in(conn, %{"credential" => credential} = params) do
     fetch_cookies(conn)
 
     with {:ok, _csrf_token} <- GoogleId.verify_csrf_token(conn.cookies, params),
-         {:ok, jwt} <- Token.verify_and_validate(credential) do
-      sign_in(conn)
+         {:ok, %{"email" => email} = jwt} <- Token.verify_and_validate(credential),
+         attrs = Map.merge(%{"image" => jwt["picture"]}, jwt),
+         {:ok, account} <- Accounts.get_by_email(email, attrs) do
+      sign_in(conn, account)
     else
       {:error, reason} ->
         redirect_to_sign_in(conn, "Authentication failed: #{reason}")
     end
   end
 
+  def sign_out(conn, _params) do
+    sign_out(conn)
+  end
+
   ## Helpers
 
-  @doc """
-  Sign an account in.
-  The session is renewed and cleared to avoid fixation attacks.
-  """
-  defp sign_in(conn) do
-    token = "todo: generate session token for user"
-
+  # Sign an account in.
+  # The session is renewed and cleared to avoid fixation attacks.
+  defp sign_in(conn, account) do
+    token = ArtifactAi.Accounts.create_session_token(account)
     return_to = get_session(conn, :return_to)
 
     conn
@@ -34,13 +38,12 @@ defmodule ArtifactAiWeb.AuthController do
     |> redirect(to: return_to || signed_in_path(conn))
   end
 
-  @doc """
-  Sign an account out.
-  The session is dropped and cleared to avoid leaking session contents.
-  """
+  # Sign an account out.
+  # The session is dropped and cleared to avoid leaking session contents.
   defp sign_out(conn) do
     token = get_session(conn, :token)
-    #    token && Accounts.delete_session_token(token)
+    token && Accounts.delete_session_token(token)
+
     if live_socket_id = get_session(conn, :live_socket_id) do
       ArtifactAiWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
     end
@@ -71,6 +74,9 @@ defmodule ArtifactAiWeb.AuthController do
   end
 
   def assign_current_user(conn, _opts) do
+    token = get_session(conn, :token)
+    user = token && Accounts.get_by_session_token(token)
+    assign(conn, :current_user, user)
   end
 
   ## Plug helpers
@@ -89,7 +95,7 @@ defmodule ArtifactAiWeb.AuthController do
   defp maybe_store_return_to(conn), do: conn
 
   defp sign_in_path(_conn), do: ~p"/"
-  defp signed_in_path(_conn), do: ~p"/create"
+  defp signed_in_path(_conn), do: ~p"/welcome"
 end
 
 defmodule ArtifactAiWeb.AuthHTML do

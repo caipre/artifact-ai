@@ -23,6 +23,10 @@ config :artifact_ai, ArtifactAiWeb.Endpoint,
 # In test we don't send emails.
 config :artifact_ai, ArtifactAi.Mailer, adapter: Swoosh.Adapters.Test
 
+# Configure Google OAuth Client ID
+# todo: maybe there's a better way than setting to empty string?
+config :artifact_ai, ArtifactAiWeb.Token, google_client_id: ""
+
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
 

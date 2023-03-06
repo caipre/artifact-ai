@@ -20,9 +20,9 @@ if System.get_env("PHX_SERVER") do
   config :artifact_ai, ArtifactAiWeb.Endpoint, server: true
 end
 
-if config_env() != :test do
-  # Configure Google OAuth Client ID
-  config :artifact_ai, ArtifactAiWeb.Token, google_client_id: System.get_env("GOOGLE_CLIENT_ID")
+# Configure Google OAuth Client ID
+if google_client_id = System.get_env("GOOGLE_CLIENT_ID") do
+  config :artifact_ai, ArtifactAiWeb.Token, google_client_id: google_client_id
 end
 
 if config_env() == :prod do

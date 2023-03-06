@@ -1,9 +1,6 @@
 defmodule ArtifactAiWeb.PageController do
   use ArtifactAiWeb, :controller
 
-  alias ArtifactAiWeb.Token
-  alias ArtifactAiWeb.Jwks.GoogleId
-
   def sign_in(conn, _params) do
     google_client_id =
       Application.get_env(:artifact_ai, ArtifactAiWeb.Token, [])
@@ -15,9 +12,9 @@ defmodule ArtifactAiWeb.PageController do
     |> render(:sign_in, layout: false)
   end
 
-  def create(conn, _params) do
+  def welcome(conn, _params) do
     conn
-    |> render(:create)
+    |> render(:welcome)
   end
 end
 
