@@ -1,8 +1,5 @@
 import Config
 
-# Only in tests, remove the complexity from the password hashing algorithm
-config :argon2_elixir, t_cost: 1, m_cost: 8
-
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -20,11 +17,15 @@ config :artifact_ai, ArtifactAi.Repo,
 # you can enable the server option below.
 config :artifact_ai, ArtifactAiWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "v2PEVc+NO7ti1IO3DBPWaTHzLt5FHjp5GegLfb8JoSNtF25T+fK1GdF7VQ1iifvy",
+  secret_key_base: "+RsRjSZb095/7jdfDlnmQlOMXy377QXlJ3bkiEveBGx5O0EVoEArr9vnWog/fIQF",
   server: false
 
 # In test we don't send emails.
 config :artifact_ai, ArtifactAi.Mailer, adapter: Swoosh.Adapters.Test
+
+# Configure Google OAuth Client ID
+# todo: maybe there's a better way than setting to empty string?
+config :artifact_ai, ArtifactAiWeb.Token, google_client_id: ""
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

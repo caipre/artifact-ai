@@ -1,6 +1,6 @@
 defmodule ArtifactAiWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :artifact_ai
   use Sentry.PlugCapture
+  use Phoenix.Endpoint, otp_app: :artifact_ai
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -8,7 +8,7 @@ defmodule ArtifactAiWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_artifact_ai_key",
-    signing_salt: "6LmTQA7l",
+    signing_salt: "1BH+SIPp",
     same_site: "Lax"
   ]
 
@@ -44,6 +44,7 @@ defmodule ArtifactAiWeb.Endpoint do
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
+
   plug Sentry.PlugContext
 
   plug Plug.MethodOverride

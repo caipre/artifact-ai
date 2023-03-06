@@ -14,6 +14,8 @@ defmodule ArtifactAi.Application do
       ArtifactAiWeb.Telemetry,
       # Start the Ecto repository
       ArtifactAi.Repo,
+      # Start the Google ID Jwks strategy
+      ArtifactAiWeb.Jwks.GoogleId,
       # Start the PubSub system
       {Phoenix.PubSub, name: ArtifactAi.PubSub},
       # Start Finch

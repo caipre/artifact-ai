@@ -32,16 +32,14 @@ defmodule ArtifactAi.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:argon2_elixir, "~> 3.0"},
       {:ecto_sql, "~> 3.6"},
-      {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},
       {:finch, "~> 0.13"},
       {:gettext, "~> 0.20"},
       {:hackney, "~> 1.8"},
-      {:heroicons, "~> 0.5"},
       {:jason, "~> 1.2"},
-      {:open_ai, "~> 0.1"},
-      {:phoenix, "~> 1.7.0-rc.3", override: true},
+      {:joken, "~> 2.6"},
+      {:joken_jwks, "~> 1.6"},
+      {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.3"},
       {:phoenix_live_dashboard, "~> 0.7"},
@@ -50,13 +48,15 @@ defmodule ArtifactAi.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 8.0"},
       {:swoosh, "~> 1.3"},
-      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:ueberauth_google, "~> 0.10"},
 
       # only: test
       {:floki, ">= 0.30.0", only: :test},
+
+      # runtime: dev
+      {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
 
       # only: dev
       {:phoenix_live_reload, "~> 1.2", only: :dev}
