@@ -1,7 +1,7 @@
 defmodule ArtifactAiWeb.PageController do
   use ArtifactAiWeb, :controller
 
-  def sign_in(conn, _params) do
+  def welcome(conn, _params) do
     google_client_id =
       Application.get_env(:artifact_ai, ArtifactAiWeb.Token, [])
       |> Keyword.fetch!(:google_client_id)
@@ -9,12 +9,12 @@ defmodule ArtifactAiWeb.PageController do
     conn
     |> assign(:google_client_id, google_client_id)
     |> assign(:login_uri, url(~p"/auth/sign_in"))
-    |> render(:sign_in, layout: false)
+    |> render(:welcome, layout: false)
   end
 
-  def welcome(conn, _params) do
+  def create(conn, _params) do
     conn
-    |> render(:welcome)
+    |> render(:create)
   end
 end
 

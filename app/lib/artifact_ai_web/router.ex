@@ -17,7 +17,7 @@ defmodule ArtifactAiWeb.Router do
 
   scope "/", ArtifactAiWeb do
     pipe_through [:browser, :csrf]
-    get "/", PageController, :sign_in
+    get "/welcome", PageController, :welcome
   end
 
   scope "/", ArtifactAiWeb do
@@ -27,7 +27,7 @@ defmodule ArtifactAiWeb.Router do
 
   scope "/", ArtifactAiWeb do
     pipe_through [:browser, :csrf, :assign_current_user, :authenticated]
-    get "/welcome", PageController, :welcome
+    get "/", PageController, :create
     post "/auth/sign_out", AuthController, :sign_out
   end
 
