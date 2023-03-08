@@ -23,8 +23,6 @@ defmodule ArtifactAiWeb.AuthController do
     sign_out(conn)
   end
 
-  ## Helpers
-
   # Sign an account in.
   # The session is renewed and cleared to avoid fixation attacks.
   defp sign_in(conn, account) do
@@ -60,26 +58,7 @@ defmodule ArtifactAiWeb.AuthController do
     |> put_session(:live_socket_id, "s:#{Base.url_encode64(token)}")
   end
 
-  ## Plugs
-
-  @doc """
-  Checks whether there is a current_user in the session.
-  Redirects to the sign in page if not.
-  """
-  def authenticated(conn, _opts) do
-    unless conn.assigns[:current_user],
-      do: redirect_to_sign_in(conn, "You must be signed in to access that page.")
-
-    conn
-  end
-
-  def assign_current_user(conn, _opts) do
-    token = get_session(conn, :token)
-    user = token && Accounts.get_by_session_token(token)
-    assign(conn, :current_user, user)
-  end
-
-  ## Plug helpers
+  ## helpers
 
   defp redirect_to_sign_in(conn, message) do
     conn
@@ -94,8 +73,8 @@ defmodule ArtifactAiWeb.AuthController do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp sign_in_path(_conn), do: ~p"/"
-  defp signed_in_path(_conn), do: ~p"/welcome"
+  defp sign_in_path(_conn), do: ~p"/welcome"
+  defp signed_in_path(_conn), do: ~p"/"
 end
 
 defmodule ArtifactAiWeb.AuthHTML do

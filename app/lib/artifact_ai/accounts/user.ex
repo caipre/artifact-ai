@@ -4,7 +4,6 @@ defmodule ArtifactAi.Accounts.User do
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
-
   schema "users" do
     field :email, :string
     field :name, :string

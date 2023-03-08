@@ -3,6 +3,10 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
-html {
+html, body {
+    height: 100%;
+}
+
+phx.loading, .phx.disconnected, .phx-connected {
     height: 100%;
 }
