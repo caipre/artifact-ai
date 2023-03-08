@@ -1,9 +1,19 @@
 defmodule ArtifactAiWeb.Router do
   use ArtifactAiWeb, :router
 
-  import ArtifactAiWeb.AuthController
+  import ArtifactAiWeb.Plugs.Auth
+  alias ArtifactAiWeb.Plugs
 
   pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {ArtifactAiWeb.Layouts, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+  pipeline :unsafe do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
@@ -11,24 +21,25 @@ defmodule ArtifactAiWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :csrf do
-    plug :protect_from_forgery
-  end
-
   scope "/", ArtifactAiWeb do
-    pipe_through [:browser, :csrf]
+    pipe_through [:unsafe]
     get "/welcome", PageController, :welcome
-  end
-
-  scope "/", ArtifactAiWeb do
-    pipe_through [:browser]
     post "/auth/sign_in", AuthController, :maybe_sign_in
   end
 
   scope "/", ArtifactAiWeb do
-    pipe_through [:browser, :csrf, :assign_current_user, :authenticated]
-    get "/", PageController, :create
+    pipe_through [:browser, :assign_current_user, :authenticated]
     post "/auth/sign_out", AuthController, :sign_out
+  end
+
+  ## Live Routes
+
+  scope "/", ArtifactAiWeb do
+    pipe_through [:browser, :assign_current_user, :authenticated]
+
+    live_session :authenticated, on_mount: [{Plugs.Auth, :mount_current_user}] do
+      live "/", PromptLive
+    end
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -41,7 +52,7 @@ defmodule ArtifactAiWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through [:browser, :csrf]
+      pipe_through [:browser]
 
       live_dashboard "/dashboard", metrics: ArtifactAiWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview

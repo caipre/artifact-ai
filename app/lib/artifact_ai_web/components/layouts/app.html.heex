@@ -1,26 +1,26 @@
-<div class="flex justify-center py-4 px-12 h-full w-full">
-  <div class="flex flex-col h-full w-full max-w-screen-lg">
-    <header>
-      <div class="flex items-center justify-between border-b border-zinc-200 py-3">
-        <h1 class="flex items-center text-sm font-semibold text-brand">
-          ArtifactAi
-          <small class="ml-3 rounded-full bg-brand/5 px-2 text-[0.8125rem] font-medium">
-            v<%= Application.spec(:artifact_ai, :vsn) %>
-          </small>
-        </h1>
-        <div class="flex items-center gap-4">
-          <img class="rounded-full w-8" src={@current_user.image} />
-        </div>
+<div class="flex flex-col h-full">
+  <header>
+    <div class="flex items-center justify-between border-b border-zinc-200 py-3 px-8">
+      <h1 class="flex items-center text-sm font-semibold text-brand">
+        ArtifactAi
+        <small class="ml-3 rounded-full bg-brand/5 px-2 text-[0.8125rem] font-medium">
+          v<%= Application.spec(:artifact_ai, :vsn) %>
+        </small>
+      </h1>
+      <div class="flex items-center gap-2">
+        <span><%= @current_user.name %></span>
+        <span>•</span>
+        <.link method="post" href={~p"/auth/sign_out"}>Sign out</.link>
       </div>
-    </header>
-    <main class="my-16">
-      <div class="mx-auto max-w-2xl">
-        <.flash_group flash={@flash} />
-        <%= @inner_content %>
-      </div>
-    </main>
-    <footer class="mt-auto">
-      ArtifactAi. &copy; 2023.
-    </footer>
-  </div>
+    </div>
+  </header>
+  <main class="mt-16 px-8">
+    <div class="mx-auto max-w-2xl">
+      <.flash_group flash={@flash} />
+      <%= @inner_content %>
+    </div>
+  </main>
+  <footer class="mt-auto mb-8 px-8">
+    ArtifactAi. &copy; 2023.
+  </footer>
 </div>
