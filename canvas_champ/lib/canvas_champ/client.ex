@@ -24,10 +24,17 @@ defmodule CanvasChamp.ApiClient do
   @base_url "https://api.canvaschamp.com"
   @version "V1"
 
-  def post(resource, body \\ %{}, headers \\ []) do
-    headers = merge_with_auth_header([{"content-type", "application/json"} | headers])
+  @oauth_version "1.0"
+  @oauth_signature_method "HMAC-SHA1"
+  @oauth_nonce_size 4
 
-    case HttpClient.request(:post, resource_url(resource), headers, body) do
+  def post(resource, body \\ %{}, headers \\ []) do
+    url = resource_url(resource)
+
+    headers =
+      merge_with_auth_header("POST", url, [{"content-type", "application/json"} | headers])
+
+    case HttpClient.request(:post, url, headers, body) do
       {:ok, json} -> decode(json)
       {:error, ex} -> {:error, ex}
     end
@@ -65,30 +72,83 @@ defmodule CanvasChamp.ApiClient do
     |> Finch.request(CanvasChamp.Finch)
   end
 
-  defp merge_with_auth_header(headers) do
-    oauth_consumer_key = Application.get_env(:canvas_champ, :consumer_key)
-    oauth_nonce = todo()
-    oauth_signature_method = todo()
-    oauth_signature = todo()
-    oauth_timestamp = todo()
-    oauth_token = todo()
+  def merge_with_auth_header(http_method, url, headers \\ []) do
+    [
+      consumer_key: consumer_key,
+      consumer_secret: consumer_secret,
+      access_token: access_token,
+      access_token_secret: access_token_secret
+    ] = Application.get_env(:canvas_champ, __MODULE__, [])
+
+    oauth_timestamp =
+      DateTime.utc_now()
+      |> DateTime.to_unix()
+      |> Integer.to_string()
+
+    oauth_nonce =
+      :crypto.strong_rand_bytes(@oauth_nonce_size)
+      |> Base.encode16()
+      |> String.downcase()
+
+    header =
+      build_auth_header(
+        http_method,
+        url,
+        oauth_nonce,
+        oauth_timestamp,
+        consumer_key,
+        consumer_secret,
+        access_token,
+        access_token_secret
+      )
+
+    [header | headers]
+  end
+
+  def build_auth_header(
+        http_method,
+        url,
+        oauth_nonce,
+        oauth_timestamp,
+        oauth_consumer_key,
+        oauth_consumer_secret,
+        oauth_token,
+        oauth_token_secret
+      ) do
+    signing_key = "#{oauth_consumer_secret}&#{oauth_token_secret}}"
+
+    message =
+      [
+        http_method,
+        url,
+        oauth_nonce,
+        @oauth_signature_method,
+        oauth_timestamp,
+        @oauth_version,
+        oauth_consumer_key,
+        oauth_token
+      ]
+      |> Enum.map(&Base.url_encode64/1)
+      |> Enum.join("&")
+
+    oauth_signature =
+      :crypto.mac(:hmac, :sha, signing_key, message)
+      |> Base.url_encode64()
 
     authorization =
       [
         oauth_consumer_key: oauth_consumer_key,
         oauth_nonce: oauth_nonce,
-        oauth_signature_method: oauth_signature_method,
+        oauth_signature_method: @oauth_signature_method,
         oauth_signature: oauth_signature,
         oauth_timestamp: oauth_timestamp,
         oauth_token: oauth_token
       ]
-      |> Enum.map(fn {k, v} -> "#{k}=#{v}" end)
+      |> Enum.map(fn {k, v} -> "#{k}='#{v}'" end)
       |> Enum.join(",")
 
-    headers = [{"authorization", "OAuth #{authorization}"} | headers]
-    headers
+    {"authorization", "OAuth #{authorization}"}
   end
 
   defp resource_url(resource), do: "#{@base_url}/rest/#{@version}/#{resource}"
-  defp todo, do: "todo"
 end
