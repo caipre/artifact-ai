@@ -25,6 +25,11 @@ if google_client_id = System.get_env("GOOGLE_CLIENT_ID") do
   config :artifact_ai, ArtifactAiWeb.Token, google_client_id: google_client_id
 end
 
+# Configure OpenAI
+config :open_ai,
+  api_key: System.get_env("OPEN_AI_API_KEY"),
+  organization: System.get_env("OPEN_AI_ORGANIZATION_ID")
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

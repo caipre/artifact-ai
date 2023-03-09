@@ -4,32 +4,33 @@ defmodule ArtifactAi.PromptsTest do
   alias ArtifactAi.Prompts
 
   describe "prompts" do
-    alias ArtifactAi.Prompts.Prompt
+    alias ArtifactAi.Prompt
 
     import ArtifactAi.PromptsFixtures
 
     @invalid_attrs %{prompt: nil}
 
-    test "list_prompts/0 returns all prompts" do
+    test "list/0 returns all prompts" do
       prompt = prompt_fixture()
-      assert Prompts.list_prompts() == [prompt]
+      assert Prompts.list() == [prompt]
     end
 
-    test "get_prompt!/1 returns the prompt with given id" do
+    test "get!/1 returns the prompt with given id" do
       prompt = prompt_fixture()
-      assert Prompts.get_prompt!(prompt.id) == prompt
+      assert Prompts.get!(prompt.id) == prompt
     end
 
-    test "create_prompt/1 with valid data creates a prompt" do
+    test "create/1 with valid data creates a prompt" do
       user = ArtifactAi.AccountsFixtures.user_fixture()
-      valid_attrs = %{prompt: "some prompt", user_id: user.id}
+      valid_attrs = %{prompt: "some prompt"}
 
-      assert {:ok, %Prompt{} = prompt} = Prompts.create_prompt(valid_attrs)
+      assert {:ok, %Prompt{} = prompt} = Prompts.create(valid_attrs, user)
       assert prompt.prompt == "some prompt"
     end
 
-    test "create_prompt/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Prompts.create_prompt(@invalid_attrs)
+    test "create/1 with invalid data returns error changeset" do
+      user = ArtifactAi.AccountsFixtures.user_fixture()
+      assert {:error, %Ecto.Changeset{}} = Prompts.create(@invalid_attrs, user)
     end
   end
 end

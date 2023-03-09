@@ -18,6 +18,7 @@ defmodule ArtifactAi.Repo.Migrations.CreateUsers do
       add :user_id, references(:users, type: :binary_id, on_delete: :delete_all), null: false
       add :token, :binary, null: false
       add :context, :string, null: false
+
       timestamps(updated_at: false)
     end
 
