@@ -4,7 +4,7 @@ defmodule ArtifactAi.AccountsTest do
   alias ArtifactAi.Accounts
 
   describe "users" do
-    alias ArtifactAi.Accounts.User
+    alias ArtifactAi.User
 
     test "create_user/1 with valid data creates a user" do
       valid_attrs = %{

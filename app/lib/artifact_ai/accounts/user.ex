@@ -1,14 +1,21 @@
-defmodule ArtifactAi.Accounts.User do
+defmodule ArtifactAi.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias ArtifactAi.Image
+  alias ArtifactAi.Prompt
+  alias ArtifactAi.Token
+
   @primary_key {:id, Ecto.UUID, autogenerate: true}
-  @foreign_key_type Ecto.UUID
   schema "users" do
-    field :email, :string
-    field :name, :string
-    field :image, :string
-    field :iss, :string
+    field :email
+    field :name
+    field :image
+    field :iss
+
+    has_one :token, Token
+    has_many :prompts, Prompt
+    has_many :images, Image
 
     timestamps()
   end

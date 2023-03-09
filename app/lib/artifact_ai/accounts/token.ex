@@ -1,18 +1,19 @@
-defmodule ArtifactAi.Accounts.Token do
+defmodule ArtifactAi.Token do
   use Ecto.Schema
   import Ecto.Query
 
-  alias ArtifactAi.Accounts.Token
-  alias ArtifactAi.Accounts.User
+  alias ArtifactAi.Token
+  alias ArtifactAi.User
 
   @rand_size 64
 
   @session_validity_in_days 60
 
   schema "tokens" do
-    field :token, :binary
-    field :context, :string
     belongs_to :user, User, type: Ecto.UUID
+    field :token, :binary
+    field :context
+
     timestamps(updated_at: false)
   end
 

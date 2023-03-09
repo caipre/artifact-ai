@@ -18,7 +18,7 @@ defmodule ArtifactAi.PromptsFixtures do
         prompt: "some prompt",
         user_id: user.id
       })
-      |> ArtifactAi.Prompts.create_prompt()
+      |> ArtifactAi.Prompts.create(user)
 
     prompt
   end

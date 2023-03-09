@@ -6,8 +6,8 @@ defmodule ArtifactAi.Accounts do
   import Ecto.Query, warn: false
   alias ArtifactAi.Repo
 
-  alias ArtifactAi.Accounts.Token
-  alias ArtifactAi.Accounts.User
+  alias ArtifactAi.Token
+  alias ArtifactAi.User
 
   @doc """
   Create a user.

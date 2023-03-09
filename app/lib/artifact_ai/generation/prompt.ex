@@ -1,12 +1,16 @@
-defmodule ArtifactAi.Prompts.Prompt do
+defmodule ArtifactAi.Prompt do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias ArtifactAi.Accounts.User
+  alias ArtifactAi.Image
+  alias ArtifactAi.User
 
   schema "prompts" do
-    field :prompt, :string
     belongs_to :user, User, type: Ecto.UUID
+
+    field :prompt
+
+    has_many :images, Image
 
     timestamps(updated_at: false)
   end

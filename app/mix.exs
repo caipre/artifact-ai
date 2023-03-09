@@ -39,6 +39,7 @@ defmodule ArtifactAi.MixProject do
       {:jason, "~> 1.2"},
       {:joken, "~> 2.6"},
       {:joken_jwks, "~> 1.6"},
+      {:open_ai, "~> 0.1"},
       {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.3"},
