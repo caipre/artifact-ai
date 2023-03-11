@@ -7,6 +7,6 @@ html, body {
     height: 100%;
 }
 
-phx.loading, .phx.disconnected, .phx-connected {
+body > div {
     height: 100%;
 }
