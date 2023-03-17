@@ -4,18 +4,18 @@ defmodule ArtifactAi.ImagesFixtures do
   entities via the `ArtifactAi.Images` context.
   """
 
+  alias ArtifactAi.Artifacts.Images
+
   @doc """
   Generate a prompt.
   """
-  def image_fixture(attrs \\ %{}) do
-    prompt = ArtifactAi.PromptsFixtures.prompt_fixture()
-
+  def image_fixture(prompt, attrs \\ %{}) do
     {:ok, image} =
       attrs
       |> Enum.into(%{
         url: "https://example.org"
       })
-      |> ArtifactAi.Images.create(prompt)
+      |> Images.create(prompt)
 
     image
   end

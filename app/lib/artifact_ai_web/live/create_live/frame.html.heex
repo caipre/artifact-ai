@@ -1,36 +1,33 @@
 <div class="mt-4 flex flex-wrap justify-center gap-2">
-  <img
-          src="https://picsum.photos/1000"
-          class="h-full w-full bg-zinc-200 border-[12px] border-zinc-900"
-  />
+  <img src={@image.url} class="h-full w-full bg-zinc-200 border-[1.2rem] border-zinc-900" />
 </div>
-<form action={~p"/orders/orderid/review"}>
+<.form phx-change="validate" phx-submit="submit">
   <div class="flex flex-col sm:flex-row sm:justify-between">
     <div class="mt-4 flex flex-col">
       <label for="print-size">Choose your print size.</label>
       <div class="flex flex-row justify-between">
-        <input type="button" value="4x4" />
-        <input type="button" value="8x8" />
-        <input type="button" value="12x12" />
+        <.input type="button" value="4x4" />
+        <.input type="button" value="8x8" />
+        <.input type="button" value="12x12" />
       </div>
     </div>
     <div class="mt-4 flex flex-col">
       <label for="print-size">Choose your frame.</label>
       <div class="flex flex-row justify-between">
-        <input type="button" value="Black" />
-        <input type="button" value="White" />
-        <input type="button" value="Natural" />
+        <.input type="button" value="Black" />
+        <.input type="button" value="White" />
+        <.input type="button" value="Natural" />
       </div>
     </div>
     <div class="mt-4 flex flex-col">
       <label for="print-size">Choose your matte.</label>
       <div class="flex flex-row justify-between">
-        <input type="button" value="Classic" />
-        <input type="button" value="Edge" />
+        <.input type="button" value="Classic" />
+        <.input type="button" value="Edge" />
       </div>
     </div>
   </div>
   <div class="mt-8 flex justify-center">
     <.button type="submit">Proceed to checkout</.button>
   </div>
-</form>
+</.form>

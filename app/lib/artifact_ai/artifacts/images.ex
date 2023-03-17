@@ -1,4 +1,4 @@
-defmodule ArtifactAi.Images do
+defmodule ArtifactAi.Artifacts.Images do
   @moduledoc """
   The Images context.
   """
@@ -7,9 +7,9 @@ defmodule ArtifactAi.Images do
   alias ArtifactAi.Repo
   alias Ecto.Multi
 
-  alias ArtifactAi.Image
-  alias ArtifactAi.Prompt
-  alias ArtifactAi.User
+  alias ArtifactAi.Accounts.User
+  alias ArtifactAi.Artifacts.Image
+  alias ArtifactAi.Artifacts.Prompt
 
   def create(attrs, %User{} = user) do
     Multi.new()
@@ -33,6 +33,14 @@ defmodule ArtifactAi.Images do
     |> Repo.insert()
   end
 
+  def from!(id) do
+    query =
+      from i in Image,
+        where: like(type(i.id, :string), ^"#{id}%")
+
+    Repo.one!(query)
+  end
+
   def get!(id) do
     Repo.get!(Image, id)
   end
@@ -43,6 +51,15 @@ defmodule ArtifactAi.Images do
         join: p in assoc(i, :prompt),
         order_by: [desc: i.inserted_at],
         preload: :prompt
+
+    Repo.all(query)
+  end
+
+  def with_prompt_id(prompt_id) do
+    query =
+      from i in Image,
+        where: i.prompt_id == ^prompt_id,
+        order_by: [desc: i.inserted_at]
 
     Repo.all(query)
   end

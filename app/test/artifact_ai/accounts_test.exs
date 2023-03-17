@@ -1,12 +1,10 @@
 defmodule ArtifactAi.AccountsTest do
-  use ArtifactAi.DataCase
+  use ArtifactAi.DataCase, async: true
 
   alias ArtifactAi.Accounts
 
   describe "users" do
-    alias ArtifactAi.User
-
-    test "create_user/1 with valid data creates a user" do
+    test "register_user/1 with valid data creates a user, auth, and session" do
       valid_attrs = %{
         email: "email@example.org",
         image: "some image",
@@ -14,11 +12,14 @@ defmodule ArtifactAi.AccountsTest do
         iss: "some iss"
       }
 
-      assert {:ok, %User{} = user} = Accounts.create_user(valid_attrs)
+      assert {:ok, %{user: user, auth: auth, session: session} = _multi} =
+               Accounts.create_user(valid_attrs)
+
       assert user.email == "email@example.org"
       assert user.image == "some image"
       assert user.name == "some name"
-      assert user.iss == "some iss"
+      assert auth.iss == "some iss"
+      assert is_binary(session.token)
     end
   end
 end

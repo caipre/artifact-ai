@@ -1,4 +1,4 @@
-defmodule ArtifactAi.Prompts do
+defmodule ArtifactAi.Artifacts.Prompts do
   @moduledoc """
   The Prompts context.
   """
@@ -6,14 +6,22 @@ defmodule ArtifactAi.Prompts do
   import Ecto.Query, warn: false
   alias ArtifactAi.Repo
 
-  alias ArtifactAi.Prompt
-  alias ArtifactAi.User
+  alias ArtifactAi.Artifacts.Prompt
+  alias ArtifactAi.Accounts.User
 
   def create(attrs \\ %{}, %User{} = user) do
     user
     |> Ecto.build_assoc(:prompts)
     |> Prompt.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def from!(id) do
+    query =
+      from p in Prompt,
+        where: like(type(p.id, :string), ^"#{id}%")
+
+    Repo.one!(query)
   end
 
   def get!(id) do

@@ -1,15 +1,14 @@
-defmodule ArtifactAi.Image do
+defmodule ArtifactAi.Artifacts.Image do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias ArtifactAi.Prompt
+  alias ArtifactAi.Artifacts.Prompt
   alias ArtifactAi.User
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "images" do
     belongs_to :user, User, type: Ecto.UUID
-    belongs_to :prompt, Prompt
-
+    belongs_to :prompt, Prompt, type: Ecto.UUID
     field :url
 
     timestamps(updated_at: false)

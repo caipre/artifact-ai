@@ -9,7 +9,7 @@
       </h1>
       <span>
         <%= if Map.has_key?(assigns, :prompt) do %>
-        <.link href={~p"/e/#{@prompt.id}"}><%= @prompt.prompt %></.link>
+          <.link href={~p"/e/#{@prompt.id}"}><%= @prompt.prompt %></.link>
         <% end %>
       </span>
       <%= if Map.has_key?(assigns, :current_user) do %>
