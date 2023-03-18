@@ -10,7 +10,7 @@ defmodule ArtifactAi.AccountsFixtures do
   Generate a user.
   """
   def user_fixture(attrs \\ %{}) do
-    {:ok, %{user: user}} =
+    {:ok, user} =
       attrs
       |> Enum.into(%{
         email: "email@example.org",

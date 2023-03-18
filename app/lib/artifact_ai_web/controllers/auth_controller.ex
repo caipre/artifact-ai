@@ -11,7 +11,7 @@ defmodule ArtifactAiWeb.AuthController do
     with {:ok, _csrf_token} <- GoogleId.verify_csrf_token(conn.cookies, params),
          {:ok, %{"email" => email} = jwt} <- Token.verify_and_validate(credential),
          attrs = Map.merge(%{"image" => jwt["picture"]}, jwt),
-         {:ok, account} <- Accounts.get_user_by_email(email, attrs) do
+         {:ok, account} <- Accounts.upsert_user(:email, email, attrs) do
       sign_in(conn, account)
     else
       {:error, reason} ->
