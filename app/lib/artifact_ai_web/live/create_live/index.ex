@@ -1,9 +1,9 @@
 defmodule ArtifactAiWeb.CreateLive.Index do
   use ArtifactAiWeb, :live_view
 
-  alias ArtifactAi.Artifacts.Images
+  alias ArtifactAi.Images
   alias ArtifactAi.Artifacts.Prompt
-  alias ArtifactAi.Artifacts.Prompts
+  alias ArtifactAi.Prompts
 
   @moduledoc false
 

@@ -4,18 +4,19 @@ defmodule ArtifactAi.PromptsFixtures do
   entities via the `ArtifactAi.Prompts` context.
   """
 
-  alias ArtifactAi.Artifacts.Prompts
+  alias ArtifactAi.Prompts
 
   @doc """
   Generate a prompt.
   """
   def prompt_fixture(user, attrs \\ %{}) do
-    {:ok, prompt} =
+    attrs =
       attrs
       |> Enum.into(%{
         prompt: "some prompt"
       })
-      |> Prompts.create(user)
+
+    {:ok, prompt} = Prompts.create(user, attrs)
 
     prompt
   end

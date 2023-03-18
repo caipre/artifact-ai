@@ -2,8 +2,8 @@ defmodule ArtifactAiWeb.CreateLive.Show do
   use ArtifactAiWeb, :live_view
   @moduledoc false
 
-  alias ArtifactAi.Artifacts.Images
-  alias ArtifactAi.Artifacts.Prompts
+  alias ArtifactAi.Images
+  alias ArtifactAi.Prompts
 
   @doc """
   A prompt

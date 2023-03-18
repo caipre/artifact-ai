@@ -10,7 +10,7 @@ defmodule ArtifactAi.AccountsFixtures do
   Generate a user.
   """
   def user_fixture(attrs \\ %{}) do
-    {:ok, user} =
+    attrs =
       attrs
       |> Enum.into(%{
         email: "email@example.org",
@@ -18,27 +18,9 @@ defmodule ArtifactAi.AccountsFixtures do
         name: "some name",
         iss: "some iss"
       })
-      |> Accounts.create_user()
+
+    {:ok, user} = Accounts.create_user(attrs)
 
     user
-  end
-
-  @doc """
-  Generate an address.
-  """
-  def address_fixture(user, attrs \\ %{}) do
-    {:ok, address} =
-      attrs
-      |> Enum.into(%{
-        address1: "722 Olive Street",
-        address2: "Apt 12",
-        city: "Brooklyn",
-        region: "New York",
-        postcode: "10016",
-        country: "US"
-      })
-      |> Accounts.create_address(user)
-
-    address
   end
 end

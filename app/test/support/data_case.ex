@@ -55,4 +55,6 @@ defmodule ArtifactAi.DataCase do
       end)
     end)
   end
+
+  def shortid(id), do: id |> String.split("-") |> List.first()
 end

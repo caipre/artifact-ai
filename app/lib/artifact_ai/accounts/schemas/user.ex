@@ -4,7 +4,7 @@ defmodule ArtifactAi.Accounts.User do
 
   alias ArtifactAi.Accounts.Address
   alias ArtifactAi.Accounts.Auth
-  alias ArtifactAi.Accounts.Session
+  alias ArtifactAi.Session
   alias ArtifactAi.Artifacts.Image
   alias ArtifactAi.Artifacts.Prompt
   alias ArtifactAi.Commerce.Cart

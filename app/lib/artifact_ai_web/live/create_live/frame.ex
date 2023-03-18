@@ -2,9 +2,9 @@ defmodule ArtifactAiWeb.CreateLive.Frame do
   use ArtifactAiWeb, :live_view
   @moduledoc false
 
-  alias ArtifactAi.Artifacts.Images
+  alias ArtifactAi.Images
   alias ArtifactAi.Products
-  alias ArtifactAi.Artifacts.Prompts
+  alias ArtifactAi.Prompts
 
   def mount(%{"prompt" => prompt, "image" => image} = params, _session, socket) do
     with prompt <- Prompts.from!(prompt),

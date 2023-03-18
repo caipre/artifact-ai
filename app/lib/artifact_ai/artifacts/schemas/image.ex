@@ -3,7 +3,7 @@ defmodule ArtifactAi.Artifacts.Image do
   import Ecto.Changeset
 
   alias ArtifactAi.Artifacts.Prompt
-  alias ArtifactAi.User
+  alias ArtifactAi.Accounts.User
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "images" do

@@ -1,34 +1,14 @@
-defmodule ArtifactAi.Artifacts.Images do
-  @moduledoc """
-  The Images context.
-  """
-
-  import Ecto.Query, warn: false
+defmodule ArtifactAi.Images do
+  @moduledoc false
   alias ArtifactAi.Repo
-  alias Ecto.Multi
+  import Ecto.Query
 
-  alias ArtifactAi.Accounts.User
   alias ArtifactAi.Artifacts.Image
   alias ArtifactAi.Artifacts.Prompt
+  alias ArtifactAi.Accounts.User
 
-  def create(attrs, %User{} = user) do
-    Multi.new()
-    |> Multi.insert(
-      :prompt,
-      user
-      |> Ecto.build_assoc(:prompts)
-      |> Prompt.changeset(attrs)
-    )
-    |> Multi.insert(:image, fn %{prompt: prompt} ->
-      Ecto.build_assoc(prompt, :images, user_id: user.id)
-      |> Image.changeset(attrs)
-    end)
-    |> Repo.transaction()
-  end
-
-  def create(attrs, %Prompt{} = prompt) do
-    prompt
-    |> Ecto.build_assoc(:images, user_id: prompt.user_id)
+  def create(%User{} = user, %Prompt{} = prompt, attrs) do
+    Ecto.build_assoc(user, :images, prompt_id: prompt.id)
     |> Image.changeset(attrs)
     |> Repo.insert()
   end
