@@ -4,7 +4,7 @@ defmodule ArtifactAi.Commerce.CartItem do
 
   alias ArtifactAi.Artifacts.Prompt
   alias ArtifactAi.Commerce.Cart
-  alias ArtifactAi.Commerce.Offer
+  alias ArtifactAi.Products.Offer
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id

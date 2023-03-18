@@ -20,5 +20,6 @@ defmodule ArtifactAi.Commerce.Order do
     order
     |> cast(attrs, [:subtotal])
     |> validate_required([:subtotal])
+    |> validate_number(:subtotal, greater_than: 0)
   end
 end

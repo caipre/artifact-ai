@@ -5,8 +5,10 @@ defmodule ArtifactAi.CartsTest do
   alias ArtifactAi.PromptsFixtures
   alias ArtifactAi.ProductsFixtures
   alias ArtifactAi.CartsFixtures
+  alias ArtifactAi.OffersFixtures
 
   alias ArtifactAi.Carts
+  alias ArtifactAi.Products.Offer
   alias ArtifactAi.Commerce.Cart
 
   describe "carts" do
@@ -14,6 +16,17 @@ defmodule ArtifactAi.CartsTest do
       user = AccountsFixtures.user_fixture()
       {:ok, %Cart{} = cart} = Carts.create_cart(user)
       assert Carts.empty?(cart)
+    end
+
+    test "subtotal/1 sums the items in the cart" do
+      user = AccountsFixtures.user_fixture()
+      prompt = PromptsFixtures.prompt_fixture(user)
+      sku = ProductsFixtures.sku_fixture()
+      offer = OffersFixtures.offer_fixture(sku)
+      cart = CartsFixtures.cart_fixture(user)
+      cart_item = CartsFixtures.cart_item_fixture(cart, offer, prompt)
+
+      assert Carts.subtotal(cart) > 0
     end
 
     test "add_cart_item/4 adds an item to a cart" do
@@ -24,7 +37,7 @@ defmodule ArtifactAi.CartsTest do
       user = AccountsFixtures.user_fixture()
       prompt = PromptsFixtures.prompt_fixture(user)
       sku = ProductsFixtures.sku_fixture()
-      offer = ProductsFixtures.offer_fixture(sku)
+      offer = OffersFixtures.offer_fixture(sku)
       cart = CartsFixtures.cart_fixture(user)
 
       Carts.add_cart_item(cart, offer, prompt, valid_attrs)
@@ -35,7 +48,7 @@ defmodule ArtifactAi.CartsTest do
       user = AccountsFixtures.user_fixture()
       prompt = PromptsFixtures.prompt_fixture(user)
       sku = ProductsFixtures.sku_fixture()
-      offer = ProductsFixtures.offer_fixture(sku)
+      offer = OffersFixtures.offer_fixture(sku)
       cart = CartsFixtures.cart_fixture(user)
       cart_item = CartsFixtures.cart_item_fixture(cart, offer, prompt)
 
@@ -46,7 +59,7 @@ defmodule ArtifactAi.CartsTest do
       user = AccountsFixtures.user_fixture()
       prompt = PromptsFixtures.prompt_fixture(user)
       sku = ProductsFixtures.sku_fixture()
-      offer = ProductsFixtures.offer_fixture(sku)
+      offer = OffersFixtures.offer_fixture(sku)
       cart = CartsFixtures.cart_fixture(user)
       cart_item = CartsFixtures.cart_item_fixture(cart, offer, prompt)
 

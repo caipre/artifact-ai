@@ -20,6 +20,17 @@ defmodule ArtifactAi.Carts do
     !Repo.exists?(query)
   end
 
+  def subtotal(%Cart{} = cart) do
+     query = from i in CartItem,
+                   where: i.cart_id == ^cart.id,
+                   join: o in assoc(i, :offer),
+                   select: o.price
+     Repo.all(query)
+     |> Enum.reduce(fn price, acc ->
+       Decimal.add(price, acc)
+     end)
+  end
+
   def create_cart(%User{} = user) do
     Ecto.build_assoc(user, :carts)
     |> Repo.insert()

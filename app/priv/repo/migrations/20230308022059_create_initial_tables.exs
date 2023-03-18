@@ -125,6 +125,7 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :user_id, references(:users, type: :binary_id), null: false
       add :cart_id, references(:carts, type: :binary_id), null: false
       add :subtotal, :decimal, null: false
+      timestamps(default: fragment("now()"))
     end
 
     create table(:order_items, primary_key: false) do

@@ -4,7 +4,6 @@ defmodule ArtifactAi.Products do
   alias ArtifactAi.Repo
   alias Ecto.Multi
 
-  alias ArtifactAi.Products.Offer
   alias ArtifactAi.Products.Product
   alias ArtifactAi.Products.ProductAttribute
   alias ArtifactAi.Products.ProductParameter
@@ -68,13 +67,5 @@ defmodule ArtifactAi.Products do
         preload: :attributes
 
     Repo.all(query)
-  end
-
-  ## Offers
-
-  def create_offer(%Sku{} = sku, attrs) do
-    Ecto.build_assoc(sku, :offers)
-    |> Offer.changeset(attrs)
-    |> Repo.insert()
   end
 end

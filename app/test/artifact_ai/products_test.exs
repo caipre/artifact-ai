@@ -4,6 +4,7 @@ defmodule ArtifactAi.ProductsTest do
   alias ArtifactAi.ProductsFixtures
 
   alias ArtifactAi.Products
+  alias ArtifactAi.Offers
   alias ArtifactAi.Products.Offer
   alias ArtifactAi.Products.Product
   alias ArtifactAi.Products.ProductAttribute
@@ -90,7 +91,7 @@ defmodule ArtifactAi.ProductsTest do
       }
 
       sku = ProductsFixtures.sku_fixture()
-      assert {:ok, %Offer{} = offer} = Products.create_offer(sku, valid_attrs)
+      assert {:ok, %Offer{} = offer} = Offers.create_offer(sku, valid_attrs)
       assert offer.price == Decimal.new(valid_attrs.price)
       assert offer.currency == valid_attrs.currency
       assert offer.expires_at == valid_attrs.expires_at
