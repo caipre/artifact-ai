@@ -1,4 +1,4 @@
-defmodule ArtifactAi.CommerceTest do
+defmodule ArtifactAi.OrdersTest do
   use ArtifactAi.DataCase, async: true
 
   describe "" do

@@ -76,7 +76,7 @@ defmodule ArtifactAi.ProductsTest do
     end
 
     test "get_sku/1 returns the sku and attributes" do
-      {:ok, sku} = ProductsFixtures.sku_fixture()
+      sku = ProductsFixtures.sku_fixture()
       Products.get_sku(sku.id)
     end
   end
@@ -89,7 +89,7 @@ defmodule ArtifactAi.ProductsTest do
         expires_at: DateTime.utc_now() |> DateTime.add(1, :day) |> DateTime.truncate(:second)
       }
 
-      {:ok, sku} = ProductsFixtures.sku_fixture()
+      sku = ProductsFixtures.sku_fixture()
       assert {:ok, %Offer{} = offer} = Products.create_offer(sku, valid_attrs)
       assert offer.price == Decimal.new(valid_attrs.price)
       assert offer.currency == valid_attrs.currency

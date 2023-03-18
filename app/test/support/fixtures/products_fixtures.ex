@@ -36,6 +36,20 @@ defmodule ArtifactAi.ProductsFixtures do
     product = product_fixture()
     attribute1 = attribute_fixture(product, %{name: "attribute 1"})
     attribute2 = attribute_fixture(product, %{name: "attribute 2"})
-    Products.create_sku(product, [attribute1, attribute2])
+    {:ok, sku} = Products.create_sku(product, [attribute1, attribute2])
+    sku
+  end
+
+  def offer_fixture(sku, attrs \\ %{}) do
+    attrs =
+      attrs
+      |> Enum.into(%{
+        price: "12.34",
+        currency: "USD",
+        expires_at: DateTime.utc_now() |> DateTime.add(1, :day) |> DateTime.truncate(:second)
+      })
+
+    {:ok, offer} = Products.create_offer(sku, attrs)
+    offer
   end
 end

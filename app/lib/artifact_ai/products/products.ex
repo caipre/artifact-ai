@@ -1,8 +1,8 @@
 defmodule ArtifactAi.Products do
   @moduledoc false
-  alias Ecto.Multi
-  alias ArtifactAi.Repo
   import Ecto.Query
+  alias ArtifactAi.Repo
+  alias Ecto.Multi
 
   alias ArtifactAi.Products.Offer
   alias ArtifactAi.Products.Product

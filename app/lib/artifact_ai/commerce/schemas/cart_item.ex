@@ -2,13 +2,17 @@ defmodule ArtifactAi.Commerce.CartItem do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias ArtifactAi.Artifacts.Prompt
+  alias ArtifactAi.Commerce.Cart
+  alias ArtifactAi.Commerce.Offer
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "cart_items" do
+    belongs_to :cart, Cart, type: Ecto.UUID
+    belongs_to :offer, Offer, type: Ecto.UUID
+    belongs_to :prompt, Prompt, type: Ecto.UUID
     field :quantity, :integer
-    field :cart_id, :binary_id
-    field :offer_id, :binary_id
-    field :prompt_id, :binary_id
 
     timestamps()
   end
@@ -18,5 +22,6 @@ defmodule ArtifactAi.Commerce.CartItem do
     cart_item
     |> cast(attrs, [:quantity])
     |> validate_required([:quantity])
+    |> validate_number(:quantity, greater_than: 0)
   end
 end
