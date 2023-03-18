@@ -62,7 +62,7 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
     create table(:product_attributes, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :product_id, references(:products, type: :binary_id), null: false
-      add :attribute, :text, null: false
+      add :name, :text, null: false
       add :value, :text, null: false
       add :price, :decimal
       add :currency, :string, size: 3, null: false, default: "USD"
@@ -72,19 +72,19 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
     create table(:product_parameters, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :product_id, references(:products, type: :binary_id), null: false
-      add :parameter, :text, null: false
+      add :name, :text, null: false
       timestamps(default: fragment("now()"))
     end
 
     create table(:skus, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :product_id, references(:products, type: :binary_id), null: false
-      timestamps(default: fragment("now()"), updated_at: false)
+      timestamps(default: fragment("now()"))
     end
 
     create table(:sku_product_attributes, primary_key: false) do
       add :sku_id, references(:skus, type: :binary_id), null: false
-      add :product_attributes_id, references(:product_attributes, type: :binary_id), null: false
+      add :product_attribute_id, references(:product_attributes, type: :binary_id), null: false
       timestamps(default: fragment("now()"), updated_at: false)
     end
 
@@ -94,7 +94,7 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :price, :decimal, null: false
       add :currency, :string, size: 3, null: false
       add :expires_at, :utc_datetime, null: false
-      timestamps(default: fragment("now()"), updated_at: false)
+      timestamps(default: fragment("now()"))
     end
 
     create table(:carts, primary_key: false) do

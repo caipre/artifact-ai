@@ -2,10 +2,17 @@ defmodule ArtifactAi.Products.Sku do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias ArtifactAi.Products.Offer
+  alias ArtifactAi.Products.Product
+  alias ArtifactAi.Products.SkuProductAttribute
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "skus" do
-    field :product_id, :binary_id
+    belongs_to :product, Product, type: Ecto.UUID
+
+    has_many :attributes, SkuProductAttribute
+    has_many :offers, Offer
 
     timestamps()
   end

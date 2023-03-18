@@ -1,14 +1,8 @@
 defmodule ArtifactAi.AccountsFixtures do
-  @moduledoc """
-  This module defines test helpers for creating
-  entities via the `ArtifactAi.Accounts` context.
-  """
+  @moduledoc false
 
   alias ArtifactAi.Accounts
 
-  @doc """
-  Generate a user.
-  """
   def user_fixture(attrs \\ %{}) do
     attrs =
       attrs

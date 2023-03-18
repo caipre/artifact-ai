@@ -1,12 +1,6 @@
 defmodule ArtifactAi.AddressesFixtures do
-  @moduledoc """
-  This module defines test helpers for creating
-  entities via the `ArtifactAi.Addresses` context.
-  """
+  @moduledoc false
 
-  @doc """
-  Generate an address.
-  """
   def address_fixture(user, attrs \\ %{}) do
     attrs =
       attrs

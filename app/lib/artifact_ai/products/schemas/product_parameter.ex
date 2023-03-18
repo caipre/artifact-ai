@@ -1,12 +1,14 @@
-defmodule ArtifactAi.Products.ProductParameters do
+defmodule ArtifactAi.Products.ProductParameter do
   use Ecto.Schema
   import Ecto.Changeset
+
+  alias ArtifactAi.Products.Product
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "product_parameters" do
-    field :parameter, :string
-    field :product_id, :binary_id
+    belongs_to :product, Product, type: Ecto.UUID
+    field :name, :string
 
     timestamps()
   end
@@ -14,7 +16,7 @@ defmodule ArtifactAi.Products.ProductParameters do
   @doc false
   def changeset(product_parameters, attrs) do
     product_parameters
-    |> cast(attrs, [:parameter])
-    |> validate_required([:parameter])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
   end
 end

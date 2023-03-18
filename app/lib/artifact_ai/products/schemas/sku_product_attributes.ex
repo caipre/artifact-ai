@@ -1,10 +1,14 @@
-defmodule ArtifactAi.Products.SkuProductAttributes do
+defmodule ArtifactAi.Products.SkuProductAttribute do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias ArtifactAi.Products.Sku
+  alias ArtifactAi.Products.ProductAttribute
+
+  @primary_key false
   schema "sku_product_attributes" do
-    field :sku_id, :binary_id
-    field :product_attribute_id, :binary_id
+    belongs_to :sku, Sku, type: Ecto.UUID
+    belongs_to :product_attribute, ProductAttribute, type: Ecto.UUID
 
     timestamps(updated_at: false)
   end

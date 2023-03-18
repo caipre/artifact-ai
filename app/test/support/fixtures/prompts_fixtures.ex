@@ -1,14 +1,8 @@
 defmodule ArtifactAi.PromptsFixtures do
-  @moduledoc """
-  This module defines test helpers for creating
-  entities via the `ArtifactAi.Prompts` context.
-  """
+  @moduledoc false
 
   alias ArtifactAi.Prompts
 
-  @doc """
-  Generate a prompt.
-  """
   def prompt_fixture(user, attrs \\ %{}) do
     attrs =
       attrs

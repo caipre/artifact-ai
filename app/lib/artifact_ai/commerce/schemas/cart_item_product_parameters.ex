@@ -1,4 +1,4 @@
-defmodule ArtifactAi.Products.CartItemProductParameters do
+defmodule ArtifactAi.Products.CartItemProductParameter do
   use Ecto.Schema
   import Ecto.Changeset
 
