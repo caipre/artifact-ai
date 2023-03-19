@@ -2,16 +2,16 @@ defmodule ArtifactAiWeb.CreateLive.Index do
   use ArtifactAiWeb, :live_view
 
   alias ArtifactAi.Images
-  alias ArtifactAi.Artifacts.Prompt
   alias ArtifactAi.Prompts
+  alias ArtifactAi.Artifacts.Prompt
 
   @moduledoc false
 
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
     changeset =
       socket.assigns.current_user
       |> Ecto.build_assoc(:prompts)
-      |> Prompt.changeset()
+      |> Prompt.changeset(params)
 
     images = Images.list()
 
@@ -33,11 +33,11 @@ defmodule ArtifactAiWeb.CreateLive.Index do
     #        with {:ok, result} <- OpenAI.Images.generate(params["prompt"], size: "1024x1024"),
     #             %{"data" => [%{"url" => url}]} <- result,
     with url <- "https://placekitten.com/1000",
-         {:ok, multi} <- Images.create(Map.put(params, "url", url), socket.assigns.current_user),
-         %{prompt: prompt, image: image} <- multi do
+         {:ok, prompt} <- Prompts.create(socket.assigns.current_user, params),
+         {:ok, image} <- Images.create(socket.assigns.current_user, prompt, %{url: url}) do
       {:noreply, redirect(socket, to: ~p"/e/#{shortid(prompt.id)}/#{shortid(image.id)}")}
     else
-      {:error, error} ->
+      {:error, _error} ->
         {:noreply, socket}
     end
   end

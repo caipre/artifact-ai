@@ -2,13 +2,13 @@ defmodule ArtifactAi.Commerce.Payment do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "payments" do
     field :amount, :decimal
     field :currency, :string
     field :external_id, :string
-    field :order_id, :binary_id
+    field :order_id, Ecto.UUID
 
     timestamps()
   end

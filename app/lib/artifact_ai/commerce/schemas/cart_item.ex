@@ -5,14 +5,17 @@ defmodule ArtifactAi.Commerce.CartItem do
   alias ArtifactAi.Artifacts.Prompt
   alias ArtifactAi.Commerce.Cart
   alias ArtifactAi.Products.Offer
+  alias ArtifactAi.Commerce.CartItemProductParameter
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "cart_items" do
     belongs_to :cart, Cart, type: Ecto.UUID
     belongs_to :offer, Offer, type: Ecto.UUID
     belongs_to :prompt, Prompt, type: Ecto.UUID
     field :quantity, :integer
+
+    has_many :parameters, CartItemProductParameter
 
     timestamps()
   end

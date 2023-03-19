@@ -1,7 +1,5 @@
 defmodule ArtifactAi.Addresses do
-  @moduledoc """
-  The Addresses context.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias ArtifactAi.Repo

@@ -8,7 +8,7 @@ defmodule ArtifactAiWeb.CreateLive.Show do
   @doc """
   A prompt
   """
-  def mount(%{"prompt" => prompt} = params, _session, socket) do
+  def mount(%{"prompt" => prompt} = _params, _session, socket) do
     with prompt <- Prompts.from!(prompt) do
       [image | images] = Images.with_prompt_id(prompt.id)
 
@@ -21,13 +21,11 @@ defmodule ArtifactAiWeb.CreateLive.Show do
     end
   end
 
-  @doc """
-  A prompt and image pair
-  """
-  def mount(%{"prompt" => prompt, "image" => image} = params, _session, socket) do
+  #  A prompt and image pair
+  def mount(%{"prompt" => prompt, "image" => image} = _params, _session, socket) do
     with prompt <- Prompts.from!(prompt),
          image <- Images.from!(image) do
-      [image | images] = Images.with_prompt_id(prompt.id)
+      [^image | images] = Images.with_prompt_id(prompt.id)
 
       {:ok,
        assign(socket,

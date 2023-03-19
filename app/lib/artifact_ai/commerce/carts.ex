@@ -11,24 +11,34 @@ defmodule ArtifactAi.Carts do
 
   ## Carts
 
-  def empty?(%Cart{} = cart) do
-    query =
-      from ci in CartItem,
-        where: ci.cart_id == ^cart.id,
-        limit: 1
+  def cart_items_query(%Cart{} = cart) do
+    from item in CartItem,
+      where: item.cart_id == ^cart.id
+  end
 
+  def cart_item_parameters_query(%Cart{} = cart) do
+    from item in CartItem,
+      where: item.cart_id == ^cart.id,
+      join: i in assoc(item, :parameters)
+  end
+
+  def get_cart_items(%Cart{} = cart) do
+    Repo.all(cart_items_query(cart))
+  end
+
+  def empty?(%Cart{} = cart) do
+    query = cart_items_query(cart) |> limit(1)
     !Repo.exists?(query)
   end
 
   def subtotal(%Cart{} = cart) do
-     query = from i in CartItem,
-                   where: i.cart_id == ^cart.id,
-                   join: o in assoc(i, :offer),
-                   select: o.price
-     Repo.all(query)
-     |> Enum.reduce(fn price, acc ->
-       Decimal.add(price, acc)
-     end)
+    query =
+      from item in cart_items_query(cart),
+        join: o in assoc(item, :offer),
+        select: o.price
+
+    Repo.all(query)
+    |> Enum.reduce(fn price, acc -> Decimal.add(price, acc) end)
   end
 
   def create_cart(%User{} = user) do

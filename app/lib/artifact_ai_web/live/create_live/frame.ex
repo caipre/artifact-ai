@@ -3,19 +3,15 @@ defmodule ArtifactAiWeb.CreateLive.Frame do
   @moduledoc false
 
   alias ArtifactAi.Images
-  alias ArtifactAi.Products
   alias ArtifactAi.Prompts
 
-  def mount(%{"prompt" => prompt, "image" => image} = params, _session, socket) do
+  def mount(%{"prompt" => prompt, "image" => image} = _params, _session, socket) do
     with prompt <- Prompts.from!(prompt),
          image <- Images.from!(image) do
-      [image | images] = Images.with_prompt_id(prompt.id)
-
-      changeset = Products.frame()
+      [^image | images] = Images.with_prompt_id(prompt.id)
 
       {:ok,
        assign(socket,
-         form: to_form(changeset),
          prompt: prompt,
          image: image,
          images: images
@@ -23,11 +19,11 @@ defmodule ArtifactAiWeb.CreateLive.Frame do
     end
   end
 
-  def handle_event("validate", %{"frame" => params}, socket) do
+  def handle_event("validate", %{"frame" => _params}, socket) do
     {:noreply, socket}
   end
 
-  def handle_event("submit", %{"frame" => params}, socket) do
+  def handle_event("submit", %{"frame" => _params}, socket) do
     {:noreply, socket}
   end
 end

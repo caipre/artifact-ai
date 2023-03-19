@@ -1,11 +1,11 @@
-defmodule ArtifactAi.Products.CartItemProductParameter do
+defmodule ArtifactAi.Commerce.CartItemProductParameter do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "cart_item_product_parameters" do
-    field :cart_item_id, :binary_id
-    field :product_attribute_id, :binary_id
-    field :value, :binary_id
+    field :cart_item_id, Ecto.UUID
+    field :product_parameter_id, Ecto.UUID
+    field :value, Ecto.UUID
 
     timestamps(updated_at: false)
   end

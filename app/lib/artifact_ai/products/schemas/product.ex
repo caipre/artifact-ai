@@ -6,8 +6,8 @@ defmodule ArtifactAi.Products.Product do
   alias ArtifactAi.Products.ProductParameter
   alias ArtifactAi.Products.Sku
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "products" do
     field :name, :string
     field :price, :decimal

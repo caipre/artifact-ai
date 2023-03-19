@@ -8,7 +8,6 @@ defmodule ArtifactAi.CartsTest do
   alias ArtifactAi.OffersFixtures
 
   alias ArtifactAi.Carts
-  alias ArtifactAi.Products.Offer
   alias ArtifactAi.Commerce.Cart
 
   describe "carts" do
@@ -24,7 +23,7 @@ defmodule ArtifactAi.CartsTest do
       sku = ProductsFixtures.sku_fixture()
       offer = OffersFixtures.offer_fixture(sku)
       cart = CartsFixtures.cart_fixture(user)
-      cart_item = CartsFixtures.cart_item_fixture(cart, offer, prompt)
+      CartsFixtures.cart_item_fixture(cart, offer, prompt)
 
       assert Carts.subtotal(cart) > 0
     end

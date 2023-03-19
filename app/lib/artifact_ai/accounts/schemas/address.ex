@@ -2,8 +2,8 @@ defmodule ArtifactAi.Accounts.Address do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "addresses" do
     belongs_to :user, User, type: Ecto.UUID
     field :address1, :string

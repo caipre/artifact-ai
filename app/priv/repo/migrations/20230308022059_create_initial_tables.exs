@@ -125,7 +125,7 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :user_id, references(:users, type: :binary_id), null: false
       add :cart_id, references(:carts, type: :binary_id), null: false
       add :subtotal, :decimal, null: false
-      timestamps(default: fragment("now()"))
+      timestamps(default: fragment("now()"), updated_at: false)
     end
 
     create table(:order_items, primary_key: false) do
@@ -134,7 +134,7 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :offer_id, references(:offers, type: :binary_id), null: false
       add :prompt_id, references(:prompts, type: :binary_id), null: false
       add :quantity, :integer, null: false, default: 1
-      timestamps(default: fragment("now()"))
+      timestamps(default: fragment("now()"), updated_at: false)
     end
 
     create table(:order_item_product_parameters, primary_key: false) do
@@ -142,7 +142,7 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :order_item_id, references(:cart_items, type: :binary_id), null: false
       add :product_parameter_id, references(:product_parameters, type: :binary_id), null: false
       add :value, :text, null: false
-      timestamps(default: fragment("now()"))
+      timestamps(default: fragment("now()"), updated_at: false)
     end
 
     create table(:order_details, primary_key: false) do
@@ -152,7 +152,7 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :shipping_address_id, references(:addresses, type: :binary_id), null: false
       add :shipping, :decimal, null: false
       add :tax, :decimal, null: false
-      timestamps(default: fragment("now()"))
+      timestamps(default: fragment("now()"), updated_at: false)
     end
 
     create table(:payments, primary_key: false) do
@@ -161,15 +161,15 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :amount, :decimal, null: false
       add :currency, :string, size: 3, null: false
       add :external_id, :string, null: false
-      timestamps(default: fragment("now()"))
+      timestamps(default: fragment("now()"), updated_at: false)
     end
 
     create table(:order_states, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :order_id, references(:orders, type: :binary_id), null: false
-      add :previous_id, references(:order_states, type: :binary_id), null: false
+      add :previous_id, references(:order_states, type: :binary_id)
       add :state, :string
-      timestamps(default: fragment("now()"))
+      timestamps(default: fragment("now()"), updated_at: false)
     end
   end
 end

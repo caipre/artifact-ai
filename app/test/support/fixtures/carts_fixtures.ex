@@ -3,7 +3,7 @@ defmodule ArtifactAi.CartsFixtures do
 
   alias ArtifactAi.Carts
 
-  def cart_fixture(user, attrs \\ %{}) do
+  def cart_fixture(user) do
     {:ok, cart} = Carts.create_cart(user)
     cart
   end

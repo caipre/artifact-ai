@@ -1,6 +1,8 @@
 defmodule ArtifactAi.AddressesFixtures do
   @moduledoc false
 
+  alias ArtifactAi.Addresses
+
   def address_fixture(user, attrs \\ %{}) do
     attrs =
       attrs

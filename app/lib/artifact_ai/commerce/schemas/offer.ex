@@ -4,8 +4,8 @@ defmodule ArtifactAi.Products.Offer do
 
   alias ArtifactAi.Products.Sku
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "offers" do
     belongs_to :sku, Sku, type: Ecto.UUID
     field :price, :decimal

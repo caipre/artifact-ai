@@ -4,8 +4,8 @@ defmodule ArtifactAi.Products.ProductParameter do
 
   alias ArtifactAi.Products.Product
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "product_parameters" do
     belongs_to :product, Product, type: Ecto.UUID
     field :name, :string

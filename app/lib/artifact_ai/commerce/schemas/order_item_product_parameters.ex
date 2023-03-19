@@ -3,9 +3,9 @@ defmodule ArtifactAi.Products.OrderItemProductParameter do
   import Ecto.Changeset
 
   schema "order_item_product_parameters" do
-    field :order_item_id, :binary_id
-    field :product_attribute_id, :binary_id
-    field :value, :binary_id
+    field :order_item_id, Ecto.UUID
+    field :product_parameter_id, Ecto.UUID
+    field :value, Ecto.UUID
 
     timestamps(updated_at: false)
   end

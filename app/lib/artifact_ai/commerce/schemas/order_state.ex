@@ -1,17 +1,21 @@
-defmodule ArtifactAi.Commerce.OrderStatus do
+defmodule ArtifactAi.Commerce.OrderState do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  alias ArtifactAi.Commerce.Order
+  alias ArtifactAi.Commerce.OrderState
+
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "order_states" do
+    belongs_to :order, Order, type: Ecto.UUID
+
     field :state, Ecto.Enum,
       values: [:PaymentDue, :Processing, :InTransit, :Delivered, :Problem, :Cancelled]
 
-    field :order_id, :binary_id
-    field :previous_id, :binary_id
+    has_one :previous, OrderState
 
-    timestamps()
+    timestamps(updated_at: false)
   end
 
   @doc false

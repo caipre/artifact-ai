@@ -64,7 +64,7 @@ defmodule ArtifactAi.ProductsTest do
       attribute1 = ProductsFixtures.attribute_fixture(product, %{name: "attribute 1"})
       attribute2 = ProductsFixtures.attribute_fixture(product, %{name: "attribute 2"})
 
-      assert {:ok, sku} = Products.create_sku(product, [attribute1, attribute2])
+      assert {:ok, %Sku{} = _} = Products.create_sku(product, [attribute1, attribute2])
     end
 
     test "add_attribute/2 adds an attribute to a sku" do

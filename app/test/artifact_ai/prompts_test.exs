@@ -28,7 +28,6 @@ defmodule ArtifactAi.PromptsTest do
 
     test "create/2 with valid data creates a prompt" do
       user = AccountsFixtures.user_fixture()
-      prompt = PromptsFixtures.prompt_fixture(user)
       valid_attrs = %{prompt: "some prompt"}
 
       assert {:ok, %Prompt{} = prompt} = Prompts.create(user, valid_attrs)

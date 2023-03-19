@@ -6,8 +6,8 @@ defmodule ArtifactAi.Products.Sku do
   alias ArtifactAi.Products.Product
   alias ArtifactAi.Products.SkuProductAttribute
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "skus" do
     belongs_to :product, Product, type: Ecto.UUID
 
