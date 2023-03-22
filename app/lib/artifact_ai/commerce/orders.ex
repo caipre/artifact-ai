@@ -12,6 +12,13 @@ defmodule ArtifactAi.Orders do
   alias ArtifactAi.Commerce.OrderState
 
   ## Orders
+  def from!(id) do
+    query =
+      from i in Order,
+        where: like(type(i.id, :string), ^"#{id}%")
+
+    Repo.one!(query)
+  end
 
   def create_order(%Cart{} = cart) do
     Multi.new()
@@ -30,6 +37,9 @@ defmodule ArtifactAi.Orders do
       |> OrderState.changeset(%{state: :PaymentDue})
     end)
     |> Repo.transaction()
+  end
+
+  def create_order_details(%Order{} = order, attrs) do
   end
 
   defp to_order_item_query(%Cart{} = cart, %Order{} = order) do

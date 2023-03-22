@@ -1,10 +1,9 @@
-<div class="mt-4 flex flex-wrap justify-center gap-2">
-  <a href={~p"/e/#{shortid(@prompt.id)}/#{shortid(@image.id)}/frame"}>
+<.form for={@form} phx-submit="submit">
+  <div class="flex flex-col gap-2">
+    <h1 class="sm:hidden sm:text-ellipsis">
+      <%= @prompt.prompt %>
+    </h1>
     <img src={@image.url} class="h-full w-full bg-zinc-200" />
-  </a>
-</div>
-<div class="mt-4 flex flex-col flex-wrap justify-between max-h-60 sm:max-h-96 gap-2">
-  <%= for img <- @images do %>
-    <img src={img.url} class="h-28 w-28 sm:h-56 sm:w-56 bg-zinc-200" />
-  <% end %>
-</div>
+    <.button>Purchase for $20</.button>
+  </div>
+</.form>

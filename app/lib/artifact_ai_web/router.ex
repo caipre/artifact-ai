@@ -45,13 +45,11 @@ defmodule ArtifactAiWeb.Router do
     live_session :main, on_mount: [{Plugs.Auth, :mount_current_user}] do
       live "/", CreateLive.Index
 
-      live "/e/:prompt", CreateLive.Show
       live "/e/:prompt/:image", CreateLive.Show
-      live "/e/:prompt/:image/frame", CreateLive.Frame
 
-      live "/orders/:order/review", PurchaseLive.Review
-      live "/orders/:order/payment", PurchaseLive.Payment
-      live "/orders/:order", PurchaseLive.Show
+      live "/purchase/:id/review", PurchaseLive.Review
+      live "/purchase/:id/payment", PurchaseLive.Payment
+      live "/purchase/:id/success", PurchaseLive.Success
     end
   end
 

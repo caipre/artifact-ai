@@ -21,14 +21,17 @@ if System.get_env("PHX_SERVER") do
 end
 
 # Configure Google OAuth Client ID
-if google_client_id = System.get_env("GOOGLE_CLIENT_ID") do
-  config :artifact_ai, ArtifactAiWeb.Token, google_client_id: google_client_id
-end
+config :artifact_ai, ArtifactAiWeb.Token, google_client_id: System.get_env("GOOGLE_CLIENT_ID")
 
 # Configure OpenAI
 config :open_ai,
   api_key: System.get_env("OPEN_AI_API_KEY"),
   organization: System.get_env("OPEN_AI_ORGANIZATION_ID")
+
+# Configure Stripe
+config :stripity_stripe,
+  api_key: System.get_env("STRIPE_SECRET"),
+  webhook_secret: System.get_env("STRIPE_WEBHOOK_SECRET")
 
 if config_env() == :prod do
   database_url =

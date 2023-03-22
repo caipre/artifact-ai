@@ -32,7 +32,7 @@ defmodule ArtifactAiWeb.CreateLive.Index do
     # todo: move this to a helper function
     #        with {:ok, result} <- OpenAI.Images.generate(params["prompt"], size: "1024x1024"),
     #             %{"data" => [%{"url" => url}]} <- result,
-    with url <- "https://placekitten.com/1000",
+    with url <- "https://picsum.photos/1000",
          {:ok, prompt} <- Prompts.create(socket.assigns.current_user, params),
          {:ok, image} <- Images.create(socket.assigns.current_user, prompt, %{url: url}) do
       {:noreply, redirect(socket, to: ~p"/e/#{shortid(prompt.id)}/#{shortid(image.id)}")}

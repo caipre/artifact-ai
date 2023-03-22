@@ -48,6 +48,7 @@ defmodule ArtifactAi.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 8.0"},
+      {:stripity_stripe, "~> 2.17"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},

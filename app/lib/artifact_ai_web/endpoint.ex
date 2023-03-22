@@ -40,6 +40,11 @@ defmodule ArtifactAiWeb.Endpoint do
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
+  #  plug Stripe.WebhookPlug,
+  #    at: "/webhook/stripe",
+  #    handler: ArtifactAi.Webhooks.Stripe,
+  #    secret: {Application, :get_env, [:stripity_stripe, :webhook_secret]}
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],

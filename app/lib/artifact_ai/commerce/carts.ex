@@ -11,6 +11,14 @@ defmodule ArtifactAi.Carts do
 
   ## Carts
 
+  def from!(id) do
+    query =
+      from i in Cart,
+        where: like(type(i.id, :string), ^"#{id}%")
+
+    Repo.one!(query)
+  end
+
   def cart_items_query(%Cart{} = cart) do
     from item in CartItem,
       where: item.cart_id == ^cart.id
@@ -32,13 +40,14 @@ defmodule ArtifactAi.Carts do
   end
 
   def subtotal(%Cart{} = cart) do
-    query =
-      from item in cart_items_query(cart),
-        join: o in assoc(item, :offer),
-        select: o.price
-
-    Repo.all(query)
-    |> Enum.reduce(fn price, acc -> Decimal.add(price, acc) end)
+    Decimal.new("20.00")
+    #    query =
+    #      from item in cart_items_query(cart),
+    #        join: o in assoc(item, :offer),
+    #        select: o.price
+    #
+    #    Repo.all(query)
+    #    |> Enum.reduce(fn price, acc -> Decimal.add(price, acc) end)
   end
 
   def create_cart(%User{} = user) do
