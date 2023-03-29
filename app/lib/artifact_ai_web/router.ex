@@ -28,6 +28,11 @@ defmodule ArtifactAiWeb.Router do
   end
 
   scope "/", ArtifactAiWeb do
+    pipe_through :browser
+    get "/about", PageController, :about
+  end
+
+  scope "/", ArtifactAiWeb do
     pipe_through [:browser, :assign_current_user, :authenticated]
     post "/auth/sign_out", AuthController, :sign_out
   end
