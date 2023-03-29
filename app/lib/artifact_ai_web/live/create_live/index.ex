@@ -3,7 +3,7 @@ defmodule ArtifactAiWeb.CreateLive.Index do
 
   alias ArtifactAi.Images
   alias ArtifactAi.Prompts
-  alias ArtifactAi.Artifacts.Prompt
+  alias ArtifactAi.Prompts.Prompt
 
   @moduledoc false
 

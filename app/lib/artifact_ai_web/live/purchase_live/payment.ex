@@ -2,14 +2,10 @@ defmodule ArtifactAiWeb.PurchaseLive.Payment do
   use ArtifactAiWeb, :live_view
   @moduledoc false
 
-  alias ArtifactAi.Carts
   alias ArtifactAi.Orders
 
   def mount(%{"id" => id} = _params, session, socket) do
-    dbg(session)
-
-    with cart <- Carts.from!(id),
-         {:ok, %{order: order}} <- Orders.create_order(cart),
+    with order <- Orders.from!(id),
          {:ok, session} <-
            Stripe.Session.create(%{
              #             cancel_url: url(~p"/e/#{shortid(prompt.id)}/#{shortid(image.id)}"),
@@ -33,6 +29,10 @@ defmodule ArtifactAiWeb.PurchaseLive.Payment do
              success_url: url(~p"/purchase/#{id}/success")
            }) do
       {:ok, redirect(socket, external: session.url)}
+    else
+      error ->
+        dbg(error)
+        {:noreply, socket}
     end
   end
 

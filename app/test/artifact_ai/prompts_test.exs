@@ -4,7 +4,7 @@ defmodule ArtifactAi.PromptsTest do
   alias ArtifactAi.AccountsFixtures
   alias ArtifactAi.PromptsFixtures
 
-  alias ArtifactAi.Artifacts.Prompt
+  alias ArtifactAi.Prompts.Prompt
   alias ArtifactAi.Prompts
 
   describe "prompts" do

@@ -1,21 +1,16 @@
-defmodule ArtifactAi.Commerce.OrderItem do
+defmodule ArtifactAi.Orders.OrderItem do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias ArtifactAi.Artifacts.Prompt
-  alias ArtifactAi.Commerce.Order
-  alias ArtifactAi.Products.Offer
-  alias ArtifactAi.Products.OrderItemProductParameter
+  alias ArtifactAi.Orders.Order
+  alias ArtifactAi.Prompts.Prompt
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
   schema "order_items" do
     belongs_to :order, Order, type: Ecto.UUID
-    belongs_to :offer, Offer, type: Ecto.UUID
     belongs_to :prompt, Prompt, type: Ecto.UUID
     field :quantity, :integer
-
-    has_many :parameters, OrderItemProductParameter
 
     timestamps()
   end

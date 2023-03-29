@@ -6,7 +6,6 @@ defmodule ArtifactAiWeb.PurchaseLive.Success do
 
   def mount(%{"id" => id} = params, _session, socket) do
     with order <- Orders.from!(id) do
-      dbg(params)
       {:ok, assign(socket, order: order)}
     end
   end

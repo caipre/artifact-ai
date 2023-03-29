@@ -1,4 +1,4 @@
-defmodule ArtifactAi.Artifacts.Prompt do
+defmodule ArtifactAi.Prompts.Prompt do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -1,14 +1,16 @@
-defmodule ArtifactAi.Commerce.Payment do
+defmodule ArtifactAi.Orders.Payment do
   use Ecto.Schema
   import Ecto.Changeset
+
+  alias ArtifactAi.Orders.Order
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
   schema "payments" do
+    belongs_to :order, Order, type: Ecto.UUID
+    field :external_id, :string
     field :amount, :decimal
     field :currency, :string
-    field :external_id, :string
-    field :order_id, Ecto.UUID
 
     timestamps()
   end

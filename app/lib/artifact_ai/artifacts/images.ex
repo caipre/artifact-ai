@@ -3,9 +3,9 @@ defmodule ArtifactAi.Images do
   alias ArtifactAi.Repo
   import Ecto.Query
 
-  alias ArtifactAi.Artifacts.Image
-  alias ArtifactAi.Artifacts.Prompt
   alias ArtifactAi.Accounts.User
+  alias ArtifactAi.Artifacts.Image
+  alias ArtifactAi.Prompts.Prompt
 
   def create(%User{} = user, %Prompt{} = prompt, attrs) do
     Ecto.build_assoc(user, :images, prompt_id: prompt.id)
@@ -13,34 +13,22 @@ defmodule ArtifactAi.Images do
     |> Repo.insert()
   end
 
-  def from!(id) do
+  def list() do
     query =
       from i in Image,
-        where: like(type(i.id, :string), ^"#{id}%")
+        join: u in assoc(i, :user),
+        join: p in assoc(i, :prompt),
+        order_by: [desc: i.inserted_at],
+        preload: [:user, :prompt]
 
-    Repo.one!(query)
+    Repo.all(query)
   end
 
   def get!(id) do
     Repo.get!(Image, id)
   end
 
-  def list() do
-    query =
-      from i in Image,
-        join: p in assoc(i, :prompt),
-        order_by: [desc: i.inserted_at],
-        preload: :prompt
-
-    Repo.all(query)
-  end
-
-  def with_prompt_id(prompt_id) do
-    query =
-      from i in Image,
-        where: i.prompt_id == ^prompt_id,
-        order_by: [desc: i.inserted_at]
-
-    Repo.all(query)
+  def from!(shortid) do
+    Repo.from!(Image, shortid)
   end
 end

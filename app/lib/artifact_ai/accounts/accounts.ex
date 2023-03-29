@@ -1,12 +1,22 @@
 defmodule ArtifactAi.Accounts do
   @moduledoc false
-
   alias ArtifactAi.Repo
   alias Ecto.Multi
+  import Ecto.Query
 
   alias ArtifactAi.Accounts.Auth
   alias ArtifactAi.Accounts.Session
   alias ArtifactAi.Accounts.User
+
+  ## Accounts
+
+  def get!(id) do
+    Repo.get!(User, id)
+  end
+
+  def from!(shortid) do
+    Repo.from!(User, shortid)
+  end
 
   @spec upsert_user(:email, binary(), map()) :: {:ok, %User{}} | {:error, any()}
   def upsert_user(:email, email, attrs) do
@@ -36,8 +46,29 @@ defmodule ArtifactAi.Accounts do
     |> Repo.transaction()
   end
 
+  ## Addresses
+
+  def create_address(%User{} = user, attrs) do
+    Ecto.build_assoc(user, :addresses)
+    |> Address.changeset(attrs)
+  end
+
+  ## Sessions
+
   def get_user_by_session_token(token) do
     {:ok, query} = Session.verify_session_token_query(token)
     Repo.one(query)
+  end
+
+  def create_session_token(account) do
+    token = Session.build_session_token(account)
+    Repo.insert!(token)
+    token.token
+  end
+
+  def delete_session_token(token) do
+    query = from s in Session, where: s.token == ^token
+    Repo.delete_all(query)
+    :ok
   end
 end

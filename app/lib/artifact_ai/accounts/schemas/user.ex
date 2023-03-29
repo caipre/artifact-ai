@@ -6,9 +6,8 @@ defmodule ArtifactAi.Accounts.User do
   alias ArtifactAi.Accounts.Auth
   alias ArtifactAi.Session
   alias ArtifactAi.Artifacts.Image
-  alias ArtifactAi.Artifacts.Prompt
-  alias ArtifactAi.Commerce.Cart
-  alias ArtifactAi.Commerce.Order
+  alias ArtifactAi.Prompts.Prompt
+  alias ArtifactAi.Orders.Order
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
@@ -22,7 +21,6 @@ defmodule ArtifactAi.Accounts.User do
     has_many :addresses, Address
     has_many :prompts, Prompt
     has_many :images, Image
-    has_many :carts, Cart
     has_many :orders, Order
 
     timestamps()

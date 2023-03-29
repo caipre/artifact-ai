@@ -4,7 +4,15 @@ defmodule ArtifactAi.Prompts do
   import Ecto.Query
 
   alias ArtifactAi.Accounts.User
-  alias ArtifactAi.Artifacts.Prompt
+  alias ArtifactAi.Prompts.Prompt
+
+  def get!(id) do
+    Repo.get!(Prompt, id)
+  end
+
+  def from!(shortid) do
+    Repo.from!(Prompt, shortid)
+  end
 
   def create(%User{} = user, attrs) do
     user
@@ -14,18 +22,12 @@ defmodule ArtifactAi.Prompts do
   end
 
   def list() do
-    Repo.all(Prompt)
-  end
-
-  def from!(id) do
     query =
-      from i in Prompt,
-        where: like(type(i.id, :string), ^"#{id}%")
+      from p in Prompt,
+        join: u in assoc(p, :user),
+        join: i in assoc(p, :images),
+        preload: [:user, :images]
 
-    Repo.one!(query)
-  end
-
-  def get!(id) do
-    Repo.get!(Prompt, id)
+    Repo.all(query)
   end
 end

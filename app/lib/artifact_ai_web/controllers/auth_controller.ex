@@ -2,7 +2,6 @@ defmodule ArtifactAiWeb.AuthController do
   use ArtifactAiWeb, :controller
 
   alias ArtifactAi.Accounts
-  alias ArtifactAi.Sessions
   alias ArtifactAiWeb.Jwks.GoogleId
   alias ArtifactAiWeb.Token
 
@@ -27,7 +26,7 @@ defmodule ArtifactAiWeb.AuthController do
   # Sign an account in.
   # The session is renewed and cleared to avoid fixation attacks.
   defp sign_in(conn, account) do
-    token = Sessions.create_session_token(account)
+    token = Accounts.create_session_token(account)
     return_to = get_session(conn, :return_to)
 
     conn
@@ -41,7 +40,7 @@ defmodule ArtifactAiWeb.AuthController do
   # The session is dropped and cleared to avoid leaking session contents.
   defp sign_out(conn) do
     token = get_session(conn, :token)
-    token && Sessions.delete_session_token(token)
+    token && Accounts.delete_session_token(token)
 
     if live_socket_id = get_session(conn, :live_socket_id) do
       ArtifactAiWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
