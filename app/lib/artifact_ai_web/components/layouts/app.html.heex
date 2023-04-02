@@ -8,8 +8,8 @@
         </small>
       </h1>
       <span class="hidden text-ellipsis sm:inline">
-        <%= if Map.has_key?(assigns, :prompt) do %>
-          <.link href={~p"/e/#{@prompt.id}"}><%= @prompt.prompt %></.link>
+        <%= if Map.has_key?(assigns, :prompt) && Map.has_key?(assigns, :image) do %>
+          <.link href={~p"/e/#{@prompt.id}/{@image.id}"}><%= @prompt.prompt %></.link>
         <% end %>
       </span>
       <%= if Map.has_key?(assigns, :current_user) do %>

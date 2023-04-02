@@ -4,6 +4,7 @@ defmodule ArtifactAi.Accounts do
   alias Ecto.Multi
   import Ecto.Query
 
+  alias ArtifactAi.Accounts.Address
   alias ArtifactAi.Accounts.Auth
   alias ArtifactAi.Accounts.Session
   alias ArtifactAi.Accounts.User

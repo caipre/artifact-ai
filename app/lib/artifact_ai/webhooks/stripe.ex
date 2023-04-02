@@ -17,7 +17,7 @@ defmodule ArtifactAi.Webhooks.Stripe do
         %Stripe.Event{
           type: "checkout.session.completed",
           data: %{object: session}
-        } = event
+        } = _event
       ) do
     #    https://stripe.com/docs/api/checkout/sessions/object
     #    todo: should the multi be someplace else?
@@ -43,6 +43,10 @@ defmodule ArtifactAi.Webhooks.Stripe do
     :ok
   end
 
+  # Return HTTP 200 OK for unhandled events
+  @impl true
+  def handle_event(_event), do: :ok
+
   defp to_address(address) do
     %{
       address1: address.line1,
@@ -62,8 +66,4 @@ defmodule ArtifactAi.Webhooks.Stripe do
       amount_total: session.amount_total
     }
   end
-
-  # Return HTTP 200 OK for unhandled events
-  @impl true
-  def handle_event(_event), do: :ok
 end

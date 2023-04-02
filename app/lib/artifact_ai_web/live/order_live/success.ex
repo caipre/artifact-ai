@@ -4,10 +4,10 @@ defmodule ArtifactAiWeb.OrderLive.Success do
 
   alias ArtifactAi.Orders
 
-  def mount(%{"id" => id} = params, _session, socket) do
+  def mount(%{"id" => id} = _params, _session, socket) do
     with order <- Orders.from!(id) |> Orders.preload(),
-         image <- Orders.image(order) do
-      {:ok, assign(socket, order: order, image: image)}
+         [item | _items] <- Orders.items(order) do
+      {:ok, assign(socket, order: order, image: item.image)}
     end
   end
 end

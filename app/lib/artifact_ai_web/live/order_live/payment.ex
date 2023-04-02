@@ -4,24 +4,29 @@ defmodule ArtifactAiWeb.OrderLive.Payment do
 
   alias ArtifactAi.Orders
 
-  def mount(%{"id" => id} = _params, session, socket) do
+  def mount(%{"id" => id} = _params, _session, socket) do
+    #    https://stripe.com/docs/api/checkout/sessions/create
     with order <- Orders.from!(id),
+         [item | _items] <- Orders.items(order),
          {:ok, session} <-
            Stripe.Session.create(%{
-             #             cancel_url: url(~p"/e/#{shortid(prompt.id)}/#{shortid(image.id)}"),
              client_reference_id: order.id,
              customer_email: socket.assigns.current_user.email,
              line_items: [
                %{
                  # Single Print — Test mode
-                 price: "price_1MnD0XBhYGMMCX9kxlJfC9P5",
+                 price_data: %{
+                   product_data: %{
+                     name: "Single Print",
+                     description: item.prompt.prompt,
+                     images: [item.image.url]
+                   },
+                   currency: "USD",
+                   unit_amount: "2000"
+                 },
                  quantity: 1
                }
              ],
-             #             metadata: %{
-             #               prompt_id: socket.assigns.prompt.id,
-             #               image_id: socket.assigns.image.id
-             #             },
              mode: "payment",
              shipping_address_collection: %{
                allowed_countries: ["US"]
@@ -32,9 +37,7 @@ defmodule ArtifactAiWeb.OrderLive.Payment do
     else
       error ->
         dbg(error)
-        {:noreply, socket}
+        {:ok, socket}
     end
   end
-
-  defp shortid(id), do: id |> String.split("-") |> List.first()
 end

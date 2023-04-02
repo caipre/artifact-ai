@@ -4,12 +4,14 @@ defmodule ArtifactAi.Orders.OrderItem do
 
   alias ArtifactAi.Orders.Order
   alias ArtifactAi.Prompts.Prompt
+  alias ArtifactAi.Artifacts.Image
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
   schema "order_items" do
     belongs_to :order, Order, type: Ecto.UUID
     belongs_to :prompt, Prompt, type: Ecto.UUID
+    belongs_to :image, Image, type: Ecto.UUID
     field :quantity, :integer
 
     timestamps(updated_at: false)

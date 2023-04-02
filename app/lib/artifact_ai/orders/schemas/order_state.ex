@@ -3,7 +3,6 @@ defmodule ArtifactAi.Orders.OrderState do
   import Ecto.Changeset
 
   alias ArtifactAi.Orders.Order
-  alias ArtifactAi.Orders.OrderState
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID

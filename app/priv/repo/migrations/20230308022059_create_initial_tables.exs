@@ -70,6 +70,7 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :id, :binary_id, primary_key: true
       add :order_id, references(:orders, type: :binary_id), null: false
       add :prompt_id, references(:prompts, type: :binary_id), null: false
+      add :image_id, references(:images, type: :binary_id), null: false
       add :quantity, :integer, null: false, default: 1
       timestamps(default: fragment("now()"), updated_at: false)
     end
