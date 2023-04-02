@@ -1,21 +1,16 @@
 defmodule ArtifactAi.ImagesFixtures do
-  @moduledoc """
-  This module defines test helpers for creating
-  entities via the `ArtifactAi.Images` context.
-  """
+  @moduledoc false
 
-  @doc """
-  Generate a prompt.
-  """
-  def image_fixture(attrs \\ %{}) do
-    prompt = ArtifactAi.PromptsFixtures.prompt_fixture()
+  alias ArtifactAi.Images
 
-    {:ok, image} =
+  def image_fixture(user, prompt, attrs \\ %{}) do
+    attrs =
       attrs
       |> Enum.into(%{
         url: "https://example.org"
       })
-      |> ArtifactAi.Images.create(prompt)
+
+    {:ok, image} = Images.create(user, prompt, attrs)
 
     image
   end

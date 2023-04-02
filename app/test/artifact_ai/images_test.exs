@@ -1,44 +1,48 @@
-defmodule ArtifactAi.ImagesTest do
-  use ArtifactAi.DataCase
+defmodule ArtifactAi.Artifacts.ImagesTest do
+  use ArtifactAi.DataCase, async: true
 
+  alias ArtifactAi.AccountsFixtures
+  alias ArtifactAi.ImagesFixtures
+  alias ArtifactAi.PromptsFixtures
+
+  alias ArtifactAi.Artifacts.Image
   alias ArtifactAi.Images
 
   describe "images" do
-    alias ArtifactAi.Image
-
-    import ArtifactAi.ImagesFixtures
-
-    @invalid_attrs %{prompt: nil}
-
     test "list/0 returns all images" do
-      image = image_fixture()
-      assert List.first(Images.list()).id == image.id
+      user = AccountsFixtures.user_fixture()
+      prompt = PromptsFixtures.prompt_fixture(user)
+      image = ImagesFixtures.image_fixture(user, prompt)
+      assert Enum.map(Images.list(), fn img -> img.id end) == [image.id]
     end
 
-    test "get!/1 returns the image with given id" do
-      image = image_fixture()
+    test "get!/1 returns an image by id" do
+      user = AccountsFixtures.user_fixture()
+      prompt = PromptsFixtures.prompt_fixture(user)
+      image = ImagesFixtures.image_fixture(user, prompt)
       assert Images.get!(image.id) == image
     end
 
-    test "create/1 with valid user data creates a image" do
-      user = ArtifactAi.AccountsFixtures.user_fixture()
-      valid_attrs = %{prompt: "some prompt", url: "https://example.org"}
-
-      assert {:ok, multi} = Images.create(valid_attrs, user)
-      assert multi.image.url == "https://example.org"
+    test "from!/1 returns an image by shortid" do
+      user = AccountsFixtures.user_fixture()
+      prompt = PromptsFixtures.prompt_fixture(user)
+      image = ImagesFixtures.image_fixture(user, prompt)
+      assert Images.from!(shortid(image.id)) == image
     end
 
-    test "create/1 with valid prompt data creates a image" do
-      prompt = ArtifactAi.PromptsFixtures.prompt_fixture()
+    test "create/2 creates an image from a prompt" do
+      user = AccountsFixtures.user_fixture()
+      prompt = PromptsFixtures.prompt_fixture(user)
       valid_attrs = %{url: "https://example.org"}
 
-      assert {:ok, %Image{} = image} = Images.create(valid_attrs, prompt)
+      assert {:ok, %Image{} = image} = Images.create(user, prompt, valid_attrs)
       assert image.url == "https://example.org"
     end
 
-    test "create/1 with invalid data returns error changeset" do
-      prompt = ArtifactAi.PromptsFixtures.prompt_fixture()
-      assert {:error, %Ecto.Changeset{}} = Images.create(@invalid_attrs, prompt)
+    test "create/2 with invalid data returns an error" do
+      user = AccountsFixtures.user_fixture()
+      prompt = PromptsFixtures.prompt_fixture(user)
+      assert {:error, %Ecto.Changeset{}} = Images.create(user, prompt, %{})
     end
   end
 end

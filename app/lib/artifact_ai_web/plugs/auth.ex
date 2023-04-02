@@ -22,7 +22,7 @@ defmodule ArtifactAiWeb.Plugs.Auth do
   """
   def assign_current_user(conn, _opts) do
     token = get_session(conn, :token)
-    user = token && Accounts.get_by_session_token(token)
+    user = token && Accounts.get_user_by_session_token(token)
     assign(conn, :current_user, user)
   end
 
@@ -40,7 +40,7 @@ defmodule ArtifactAiWeb.Plugs.Auth do
     case session do
       %{"token" => token} ->
         Phoenix.Component.assign_new(socket, :current_user, fn ->
-          Accounts.get_by_session_token(token)
+          Accounts.get_user_by_session_token(token)
         end)
 
       %{} ->

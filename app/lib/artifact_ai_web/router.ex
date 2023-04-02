@@ -42,8 +42,14 @@ defmodule ArtifactAiWeb.Router do
   scope "/", ArtifactAiWeb do
     pipe_through [:browser, :assign_current_user, :authenticated]
 
-    live_session :authenticated, on_mount: [{Plugs.Auth, :mount_current_user}] do
-      live "/", PromptLive
+    live_session :main, on_mount: [{Plugs.Auth, :mount_current_user}] do
+      live "/", CreateLive.Index
+
+      live "/e/:prompt/:image", CreateLive.Show
+
+      live "/orders/:id/review", OrderLive.Review
+      live "/orders/:id/payment", OrderLive.Payment
+      live "/orders/:id/success", OrderLive.Success
     end
   end
 

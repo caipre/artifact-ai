@@ -11,7 +11,7 @@ defmodule ArtifactAiWeb.AuthController do
     with {:ok, _csrf_token} <- GoogleId.verify_csrf_token(conn.cookies, params),
          {:ok, %{"email" => email} = jwt} <- Token.verify_and_validate(credential),
          attrs = Map.merge(%{"image" => jwt["picture"]}, jwt),
-         {:ok, account} <- Accounts.get_by_email(email, attrs) do
+         {:ok, account} <- Accounts.upsert_user(:email, email, attrs) do
       sign_in(conn, account)
     else
       {:error, reason} ->
@@ -26,7 +26,7 @@ defmodule ArtifactAiWeb.AuthController do
   # Sign an account in.
   # The session is renewed and cleared to avoid fixation attacks.
   defp sign_in(conn, account) do
-    token = ArtifactAi.Accounts.create_session_token(account)
+    token = Accounts.create_session_token(account)
     return_to = get_session(conn, :return_to)
 
     conn

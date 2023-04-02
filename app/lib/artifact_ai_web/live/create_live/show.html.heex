@@ -1,0 +1,9 @@
+<.form for={@form} phx-submit="submit">
+  <div class="flex flex-col gap-2">
+    <h1 class="sm:hidden sm:text-ellipsis">
+      <%= @prompt.prompt %>
+    </h1>
+    <img src={@image.url} class="h-full w-full bg-zinc-200" />
+    <.button>Purchase for $20</.button>
+  </div>
+</.form>

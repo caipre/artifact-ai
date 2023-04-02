@@ -1,21 +1,27 @@
-defmodule ArtifactAi.User do
+defmodule ArtifactAi.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias ArtifactAi.Image
-  alias ArtifactAi.Prompt
-  alias ArtifactAi.Token
+  alias ArtifactAi.Accounts.Address
+  alias ArtifactAi.Accounts.Auth
+  alias ArtifactAi.Session
+  alias ArtifactAi.Artifacts.Image
+  alias ArtifactAi.Prompts.Prompt
+  alias ArtifactAi.Orders.Order
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
   schema "users" do
-    field :email
-    field :name
-    field :image
-    field :iss
+    field :email, :string
+    field :name, :string
+    field :image, :string
 
-    has_one :token, Token
+    has_one :auth, Auth
+    has_one :session, Session
+    has_many :addresses, Address
     has_many :prompts, Prompt
     has_many :images, Image
+    has_many :orders, Order
 
     timestamps()
   end
@@ -23,7 +29,7 @@ defmodule ArtifactAi.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :name, :image, :iss])
+    |> cast(attrs, [:email, :name, :image])
     |> validate_email()
   end
 

@@ -1,14 +1,10 @@
 defmodule ArtifactAi.AccountsFixtures do
-  @moduledoc """
-  This module defines test helpers for creating
-  entities via the `ArtifactAi.Accounts` context.
-  """
+  @moduledoc false
 
-  @doc """
-  Generate a user.
-  """
+  alias ArtifactAi.Accounts
+
   def user_fixture(attrs \\ %{}) do
-    {:ok, user} =
+    attrs =
       attrs
       |> Enum.into(%{
         email: "email@example.org",
@@ -16,7 +12,8 @@ defmodule ArtifactAi.AccountsFixtures do
         name: "some name",
         iss: "some iss"
       })
-      |> ArtifactAi.Accounts.create_user()
+
+    {:ok, user} = Accounts.create_user(attrs)
 
     user
   end

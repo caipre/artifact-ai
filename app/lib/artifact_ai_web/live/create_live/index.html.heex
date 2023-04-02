@@ -1,0 +1,17 @@
+<div>
+  <.form for={@form} phx-change="validate" phx-submit="submit">
+    <.input
+      autofocus
+      field={@form[:prompt]}
+      label="Enter a detailed description"
+      placeholder="An impressionist..."
+    />
+  </.form>
+</div>
+<div class="mt-4 flex flex-wrap gap-2">
+  <%= for img <- @images do %>
+    <a href={~p"/e/#{shortid(img.prompt.id)}/#{shortid(img.id)}"}>
+      <img src={img.url} class="h-28 w-28 sm:h-48 sm:w-48 bg-zinc-200" />
+    </a>
+  <% end %>
+</div>
