@@ -12,7 +12,7 @@ defmodule ArtifactAi.Orders.OrderItem do
     belongs_to :prompt, Prompt, type: Ecto.UUID
     field :quantity, :integer
 
-    timestamps()
+    timestamps(updated_at: false)
   end
 
   @doc false

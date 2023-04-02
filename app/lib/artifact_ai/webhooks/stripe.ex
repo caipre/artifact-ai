@@ -31,7 +31,6 @@ defmodule ArtifactAi.Webhooks.Stripe do
       |> Address.changeset(to_address(session.customer_details.address))
     end)
     |> Multi.insert(:details, fn %{order: order, address: address} ->
-    dbg(address)
       Ecto.build_assoc(order, :details, shipping_address_id: address.id)
       |> OrderDetails.changeset(to_order_details(session))
     end)

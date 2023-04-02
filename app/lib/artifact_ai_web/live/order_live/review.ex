@@ -1,4 +1,4 @@
-defmodule ArtifactAiWeb.PurchaseLive.Review do
+defmodule ArtifactAiWeb.OrderLive.Review do
   use ArtifactAiWeb, :live_view
   @moduledoc false
 

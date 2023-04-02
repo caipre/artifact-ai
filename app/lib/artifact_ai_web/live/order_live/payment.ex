@@ -1,4 +1,4 @@
-defmodule ArtifactAiWeb.PurchaseLive.Payment do
+defmodule ArtifactAiWeb.OrderLive.Payment do
   use ArtifactAiWeb, :live_view
   @moduledoc false
 
@@ -26,7 +26,7 @@ defmodule ArtifactAiWeb.PurchaseLive.Payment do
              shipping_address_collection: %{
                allowed_countries: ["US"]
              },
-             success_url: url(~p"/purchase/#{id}/success")
+             success_url: url(~p"/orders/#{id}/success")
            }) do
       {:ok, redirect(socket, external: session.url)}
     else

@@ -47,9 +47,9 @@ defmodule ArtifactAiWeb.Router do
 
       live "/e/:prompt/:image", CreateLive.Show
 
-      live "/purchase/:id/review", PurchaseLive.Review
-      live "/purchase/:id/payment", PurchaseLive.Payment
-      live "/purchase/:id/success", PurchaseLive.Success
+      live "/orders/:id/review", OrderLive.Review
+      live "/orders/:id/payment", OrderLive.Payment
+      live "/orders/:id/success", OrderLive.Success
     end
   end
 

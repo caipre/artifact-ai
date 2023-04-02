@@ -22,7 +22,7 @@ defmodule ArtifactAiWeb.CreateLive.Show do
   def handle_event("submit", params, socket) do
     with {:ok, order} <-
            Orders.create_order(socket.assigns.current_user, %{amount_subtotal: 2000}) do
-      {:noreply, push_navigate(socket, to: ~p"/purchase/#{shortid(order.id)}/payment")}
+      {:noreply, push_navigate(socket, to: ~p"/orders/#{shortid(order.id)}/payment")}
     else
       {:error, error} ->
         dbg(error)

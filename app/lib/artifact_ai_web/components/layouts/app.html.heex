@@ -13,12 +13,12 @@
         <% end %>
       </span>
       <%= if Map.has_key?(assigns, :current_user) do %>
-      <div class="flex items-center gap-2">
-        <span><%= @current_user.name %></span>
-        <span>•</span>
-        <.link method="post" href={~p"/auth/sign_out"}>Sign out</.link>
-      </div>
-      <%= end %>
+        <div class="flex items-center gap-2">
+          <span><%= @current_user.name %></span>
+          <span>•</span>
+          <.link method="post" href={~p"/auth/sign_out"}>Sign out</.link>
+        </div>
+      <% end %>
     </div>
   </header>
   <main class="mt-8 px-4">
