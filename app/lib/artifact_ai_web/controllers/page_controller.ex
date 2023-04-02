@@ -12,9 +12,9 @@ defmodule ArtifactAiWeb.PageController do
     |> render(:welcome, layout: false)
   end
 
-  def create(conn, _params) do
+  def about(conn, _params) do
     conn
-    |> render(:create)
+    |> render(:about)
   end
 end
 
