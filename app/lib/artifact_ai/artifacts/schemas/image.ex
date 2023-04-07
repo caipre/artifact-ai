@@ -9,7 +9,6 @@ defmodule ArtifactAi.Artifacts.Image do
   schema "images" do
     belongs_to :user, User, type: Ecto.UUID
     belongs_to :prompt, Prompt, type: Ecto.UUID
-    field :url
 
     timestamps(updated_at: false)
   end
@@ -17,7 +16,7 @@ defmodule ArtifactAi.Artifacts.Image do
   @doc false
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:url])
-    |> validate_required([:url])
+    |> cast(attrs, [])
+    |> validate_required([])
   end
 end

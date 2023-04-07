@@ -6,9 +6,7 @@ defmodule ArtifactAi.ImagesFixtures do
   def image_fixture(user, prompt, attrs \\ %{}) do
     attrs =
       attrs
-      |> Enum.into(%{
-        url: "https://example.org"
-      })
+      |> Enum.into(%{})
 
     {:ok, image} = Images.create(user, prompt, attrs)
 

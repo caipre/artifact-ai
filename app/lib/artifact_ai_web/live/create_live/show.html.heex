@@ -3,7 +3,10 @@
     <h1 class="sm:hidden sm:text-ellipsis">
       <%= @prompt.prompt %>
     </h1>
-    <img src={@image.url} class="h-full w-full bg-zinc-200" />
-    <.button>Purchase for $20</.button>
+    <img
+      src={"https://d3h1bvh1ced4x7.cloudfront.net/image-#{@image.id}.png"}
+      class="h-full w-full bg-zinc-200"
+    />
+    <.button>Purchase</.button>
   </div>
 </.form>

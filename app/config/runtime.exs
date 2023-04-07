@@ -33,6 +33,13 @@ config :stripity_stripe,
   api_key: System.get_env("STRIPE_SECRET"),
   webhook_secret: System.get_env("STRIPE_WEBHOOK_SECRET")
 
+# Configure AWS S3
+config :ex_aws,
+  access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+  secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"},
+  region: {:system, "AWS_REGION"},
+  json_codec: Jason
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

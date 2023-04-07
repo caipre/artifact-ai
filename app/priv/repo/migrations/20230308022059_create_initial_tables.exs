@@ -47,7 +47,6 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :id, :binary_id, primary_key: true
       add :user_id, references(:users, type: :binary_id), null: false
       add :prompt_id, references(:prompts, type: :binary_id), null: false
-      add :url, :text, null: false
       timestamps(default: fragment("now()"), updated_at: false)
     end
 

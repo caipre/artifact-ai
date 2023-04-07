@@ -33,6 +33,8 @@ defmodule ArtifactAi.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.6"},
+      {:ex_aws, "~> 2.4"},
+      {:ex_aws_s3, "~> 2.4"},
       {:finch, "~> 0.13"},
       {:gettext, "~> 0.20"},
       {:hackney, "~> 1.8"},
@@ -49,6 +51,7 @@ defmodule ArtifactAi.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 8.0"},
       {:stripity_stripe, "~> 2.17"},
+      {:sweet_xml, "~> 0.7"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
