@@ -51,4 +51,18 @@ defmodule ArtifactAi.Orders do
 
     Repo.all(query)
   end
+
+  def sent_confirmation_email?(%Order{} = order) do
+    query =
+      from o in Order,
+        where: o.id == ^order.id,
+        join: e in assoc(o, :emails)
+
+    Repo.exists?(query)
+  end
+
+  def sent_confirmation_email(%User{} = user, %Order{} = order) do
+    Ecto.build_assoc(order, :emails, user_id: user.id)
+    |> Repo.insert!()
+  end
 end

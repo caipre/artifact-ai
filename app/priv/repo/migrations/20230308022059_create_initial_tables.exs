@@ -92,5 +92,12 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :state, :string
       timestamps(default: fragment("now()"), updated_at: false)
     end
+
+    create table(:order_emails, primary_key: false) do
+      add :id, :binary_id, primary_key: true
+      add :user_id, references(:users, type: :binary_id), null: false
+      add :order_id, references(:orders, type: :binary_id), null: false
+      timestamps(default: fragment("now()"), updated_at: false)
+    end
   end
 end

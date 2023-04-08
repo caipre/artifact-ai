@@ -7,6 +7,7 @@ defmodule ArtifactAi.Orders.Order do
   alias ArtifactAi.Orders.OrderItem
   alias ArtifactAi.Orders.OrderState
   alias ArtifactAi.Orders.Payment
+  alias ArtifactAi.Orders.Email
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
@@ -18,6 +19,7 @@ defmodule ArtifactAi.Orders.Order do
     has_many :states, OrderState
     has_one :details, OrderDetails
     has_one :payment, Payment
+    has_many :emails, Email
 
     timestamps(updated_at: false)
   end

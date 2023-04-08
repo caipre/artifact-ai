@@ -52,7 +52,7 @@ defmodule ArtifactAi.MixProject do
       {:sentry, "~> 8.0"},
       {:stripity_stripe, "~> 2.17"},
       {:sweet_xml, "~> 0.7"},
-      {:swoosh, "~> 1.3"},
+      {:swoosh, "~> 1.9"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
 
