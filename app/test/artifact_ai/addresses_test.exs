@@ -3,7 +3,7 @@ defmodule ArtifactAi.AddressesTest do
 
   alias ArtifactAi.AccountsFixtures
 
-  alias ArtifactAi.Addresses
+  alias ArtifactAi.Accounts
 
   describe "addresses" do
     test "create_address/2 creates an address" do
@@ -18,7 +18,7 @@ defmodule ArtifactAi.AddressesTest do
 
       user = AccountsFixtures.user_fixture()
 
-      {:ok, address} = Addresses.create(user, valid_attrs)
+      {:ok, address} = Accounts.create_address(user, valid_attrs)
       assert address.address1 == valid_attrs.address1
       assert address.address2 == valid_attrs.address2
       assert address.city == valid_attrs.city

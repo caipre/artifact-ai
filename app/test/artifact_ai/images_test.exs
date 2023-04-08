@@ -33,16 +33,8 @@ defmodule ArtifactAi.Artifacts.ImagesTest do
     test "create/2 creates an image from a prompt" do
       user = AccountsFixtures.user_fixture()
       prompt = PromptsFixtures.prompt_fixture(user)
-      valid_attrs = %{url: "https://example.org"}
 
-      assert {:ok, %Image{} = image} = Images.create(user, prompt, valid_attrs)
-      assert image.url == "https://example.org"
-    end
-
-    test "create/2 with invalid data returns an error" do
-      user = AccountsFixtures.user_fixture()
-      prompt = PromptsFixtures.prompt_fixture(user)
-      assert {:error, %Ecto.Changeset{}} = Images.create(user, prompt, %{})
+      assert {:ok, %Image{}} = Images.create(user, prompt)
     end
   end
 end

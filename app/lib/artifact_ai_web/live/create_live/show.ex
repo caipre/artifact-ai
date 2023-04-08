@@ -20,7 +20,8 @@ defmodule ArtifactAiWeb.CreateLive.Show do
   end
 
   def handle_event("submit", _params, socket) do
-    attrs = %{amount_subtotal: 2000, quantity: 1}
+    # todo: replace with actual values
+    attrs = %{amount_subtotal: 100, quantity: 1}
 
     with {:ok, order} <-
            Orders.create_order(socket.assigns.current_user, socket.assigns.image, attrs) do

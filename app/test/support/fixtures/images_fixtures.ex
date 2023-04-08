@@ -8,7 +8,7 @@ defmodule ArtifactAi.ImagesFixtures do
       attrs
       |> Enum.into(%{})
 
-    {:ok, image} = Images.create(user, prompt, attrs)
+    {:ok, image} = Images.create(user, prompt)
 
     image
   end
