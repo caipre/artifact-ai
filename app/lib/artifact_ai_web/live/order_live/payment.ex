@@ -2,6 +2,7 @@ defmodule ArtifactAiWeb.OrderLive.Payment do
   use ArtifactAiWeb, :live_view
   @moduledoc false
 
+  alias ArtifactAi.Images
   alias ArtifactAi.Orders
 
   def mount(%{"id" => id} = _params, _session, socket) do
@@ -14,15 +15,14 @@ defmodule ArtifactAiWeb.OrderLive.Payment do
              customer_email: socket.assigns.current_user.email,
              line_items: [
                %{
-                 # Single Print — Test mode
                  price_data: %{
                    product_data: %{
                      name: "Single Print",
                      description: item.prompt.prompt,
-                     images: [item.image.url]
+                     images: [Images.url(item.image)]
                    },
                    currency: "USD",
-                   unit_amount: "2000"
+                   unit_amount: "100"
                  },
                  quantity: 1
                }

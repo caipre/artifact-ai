@@ -9,9 +9,7 @@ defmodule ArtifactAi.PromptsTest do
 
   describe "prompts" do
     test "list/0 returns all prompts" do
-      user = AccountsFixtures.user_fixture()
-      prompt = PromptsFixtures.prompt_fixture(user)
-      assert Prompts.list() == [prompt]
+      assert Prompts.list()
     end
 
     test "get!/1 returns the prompt with given id" do

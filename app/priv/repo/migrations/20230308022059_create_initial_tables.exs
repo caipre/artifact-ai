@@ -47,7 +47,6 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :id, :binary_id, primary_key: true
       add :user_id, references(:users, type: :binary_id), null: false
       add :prompt_id, references(:prompts, type: :binary_id), null: false
-      add :url, :text, null: false
       timestamps(default: fragment("now()"), updated_at: false)
     end
 
@@ -91,6 +90,13 @@ defmodule ArtifactAi.Repo.Migrations.CreatePrompts do
       add :order_id, references(:orders, type: :binary_id), null: false
       add :previous_id, references(:order_states, type: :binary_id)
       add :state, :string
+      timestamps(default: fragment("now()"), updated_at: false)
+    end
+
+    create table(:order_emails, primary_key: false) do
+      add :id, :binary_id, primary_key: true
+      add :user_id, references(:users, type: :binary_id), null: false
+      add :order_id, references(:orders, type: :binary_id), null: false
       timestamps(default: fragment("now()"), updated_at: false)
     end
   end

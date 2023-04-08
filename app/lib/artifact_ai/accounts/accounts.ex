@@ -52,6 +52,7 @@ defmodule ArtifactAi.Accounts do
   def create_address(%User{} = user, attrs) do
     Ecto.build_assoc(user, :addresses)
     |> Address.changeset(attrs)
+    |> Repo.insert()
   end
 
   ## Sessions

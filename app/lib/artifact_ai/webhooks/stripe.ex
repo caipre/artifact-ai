@@ -38,6 +38,10 @@ defmodule ArtifactAi.Webhooks.Stripe do
       Ecto.build_assoc(order, :states)
       |> OrderState.changeset(%{state: :Processing})
     end)
+    |> Multi.insert(:state, fn %{order: order} ->
+      Ecto.build_assoc(order, :states)
+      |> OrderState.changeset(%{state: :Processing})
+    end)
     |> Repo.transaction()
 
     :ok

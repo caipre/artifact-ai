@@ -7,10 +7,13 @@ defmodule ArtifactAi.Images do
   alias ArtifactAi.Artifacts.Image
   alias ArtifactAi.Prompts.Prompt
 
-  def create(%User{} = user, %Prompt{} = prompt, attrs) do
+  def create(%User{} = user, %Prompt{} = prompt) do
     Ecto.build_assoc(user, :images, prompt_id: prompt.id)
-    |> Image.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def url(%Image{} = image) do
+    "https://d3h1bvh1ced4x7.cloudfront.net/image-#{image.id}.png"
   end
 
   def list() do
